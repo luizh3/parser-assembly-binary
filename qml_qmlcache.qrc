@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="img/minimize.png">img/minimize.png</file>
+        <file alias="img/quadrado.png">img/quadrado.png</file>
+        <file alias="img/x.png">img/x.png</file>
+        <file alias="img/confirm.png">img/confirm.png</file>
+        <file alias="img/lock.png">img/lock.png</file>
+        <file alias="img/close.png">img/close.png</file>
+        <file alias="img/error.png">img/error.png</file>
+        <file alias="img/img.png">img/img.png</file>
+        <file alias="img/gear.png">img/gear.png</file>
+        <file alias="img/close-icon.png">img/close-icon.png</file>
+    </qresource>
+</RCC>

@@ -14,7 +14,7 @@ ApplicationWindow {
     width: 1300
     height: 800
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Parser")
     flags: Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.Window
     visibility: "Windowed"
     color: "#3b3b3b"

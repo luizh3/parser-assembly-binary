@@ -13,8 +13,7 @@ namespace {
 QString UtilsHelper::absolutePathApplication() {
 
    const QList<QString> DIRECTORYS_INVALIDS = {
-       "/debug",
-       "/release"
+       "/debug"
    };
 
    QString path = QDir::fromNativeSeparators( QCoreApplication::applicationDirPath());

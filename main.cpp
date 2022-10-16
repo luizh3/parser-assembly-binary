@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QIcon>
 
 #include "controller/inputcodecontroller.h"
 #include "controller/config/settingscontroller.h"
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("NotoCorporation");
     QCoreApplication::setOrganizationDomain("NoExists.com");
     QCoreApplication::setApplicationName("Parser");
+    app.setWindowIcon(QIcon("./img/code.png"));
 
     qmlRegisterType<InputCodeController>( "br.com.InputCodeController", 1, 0, "InputCodeController" );
     qmlRegisterType<SettingsController>( "br.com.SettingsController", 1, 0, "SettingsController" );

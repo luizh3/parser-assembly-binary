@@ -19,5 +19,6 @@
         <file>components/SwitchCustom.qml</file>
         <file>img/close-icon.png</file>
         <file>components/ButtonCustom.qml</file>
+        <file>img/code.png</file>
     </qresource>
 </RCC>
