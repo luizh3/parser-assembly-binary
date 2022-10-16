@@ -1,0 +1,27 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.db
+*.txt
+*.pdf
+*.user
+*.Release
+*.Debug
+*.stash
+
+# Ignore
+
+/users**
+**/*.user
+**/moc_*
+**/*.user
+
+**/Makefile
+**/debug
+**/release
+

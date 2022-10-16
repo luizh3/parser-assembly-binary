@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>components/header/Header.qml</file>
+        <file>img/minimize.png</file>
+        <file>img/quadrado.png</file>
+        <file>img/x.png</file>
+        <file>components/buttons/icon/ButtonIcon.qml</file>
+        <file>img/confirm.png</file>
+        <file>img/lock.png</file>
+        <file>components/inputcode/InputCodeScreen.qml</file>
+        <file>components/mensage/MensagePopup.qml</file>
+        <file>img/close.png</file>
+        <file>img/error.png</file>
+        <file>components/sidebar/SideBar.qml</file>
+        <file>img/img.png</file>
+        <file>img/gear.png</file>
+        <file>components/config/SettingsScreen.qml</file>
+        <file>components/SwitchCustom.qml</file>
+        <file>img/close-icon.png</file>
+        <file>components/ButtonCustom.qml</file>
+    </qresource>
+</RCC>
