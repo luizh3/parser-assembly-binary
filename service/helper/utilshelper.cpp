@@ -62,3 +62,6 @@ QString UtilsHelper::pathConfigFile() {
     qInfo() << "UtilsHelper::pathConfigFile" << path;
     return path;
 }
+
+constexpr const char* UtilsHelper::DS_CONFIGS;
+constexpr const char* UtilsHelper::FG_RUN_CODE;
