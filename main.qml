@@ -1,7 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.12
-import QtQuick.Controls.Styles 1.4
 
 import "./components/header"
 import "./components/inputcode"
@@ -18,10 +16,6 @@ ApplicationWindow {
     flags: Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.Window
     visibility: "Windowed"
     color: "#3b3b3b"
-
-    Material.theme: Material.Dark
-    Material.accent: Material.Blue
-    Material.elevation: 0
 
     Component.onCompleted: {
 

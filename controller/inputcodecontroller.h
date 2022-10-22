@@ -4,7 +4,6 @@
 #include <functional>
 
 #include <QObject>
-#include <QProcess>
 
 class InputCodeController : public QObject {
     Q_OBJECT

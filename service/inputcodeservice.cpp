@@ -3,11 +3,12 @@
 #include <QFile>
 #include <QDebug>
 #include <QTextStream>
-#include <QCoreApplication>
 
 #include <service/helper/utilshelper.h>
 
 void InputCodeService::writeText( const QString& text ) const {
+
+    qInfo() << "InputCodeService::writeText [DS_TEXT]" << text;
 
     const QString path = UtilsHelper::toAbsolutePath( { DS_DIRECTORY_FILE, DS_FILE_C } );
 
@@ -25,14 +26,18 @@ void InputCodeService::writeText( const QString& text ) const {
 
     file.close();
 
+    qInfo() << "InputCodeService::writeText";
+
 }
 
 QString InputCodeService::readText() const {
 
+    qInfo() << "InputCodeService::writeText";
+
     const QString path = UtilsHelper::toAbsolutePath( { DS_DIRECTORY_FILE, DS_FILE_C } );
 
     QFile file( path );
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    if(!file.open( QIODevice::ReadOnly | QIODevice::Text ) ) {
         qCritical() << "InputCodeController::getInitTex falha ao abrir arquivo";
         return "";
     }
@@ -46,6 +51,8 @@ QString InputCodeService::readText() const {
     }
 
     file.close();
+
+    qInfo() << "InputCodeService::writeText [RETURN]" << resultText;
 
     return resultText;
 

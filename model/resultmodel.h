@@ -16,9 +16,9 @@ public:
     void setIsError(bool newIsError);
 
 private:
+    bool _isError;
     QString _title;
     QString _message;
-    bool _isError;
 };
 
 #endif // RESULTMODEL_H

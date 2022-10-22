@@ -1,15 +1,11 @@
 #include "inputcodecontroller.h"
 
-#include <service/inputcodeservice.h>
-
-#include <QDir>
-#include <QCoreApplication>
 #include <QDebug>
-#include <QFuture>
 #include <QtConcurrent>
 
 #include <model/resultmodel.h>
 
+#include <service/inputcodeservice.h>
 #include <service/helper/utilshelper.h>
 #include <service/exception/serviceexception.h>
 
