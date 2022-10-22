@@ -57,3 +57,7 @@ QString InputCodeService::readText() const {
     return resultText;
 
 }
+
+constexpr const char* InputCodeService::DS_DIRECTORY_FILE;
+constexpr const char* InputCodeService::DS_EXEC_FILE;
+constexpr const char* InputCodeService::DS_FILE_C;

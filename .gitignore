@@ -24,4 +24,4 @@
 **/Makefile
 **/debug
 **/release
-
+**/.qtc_clangd
