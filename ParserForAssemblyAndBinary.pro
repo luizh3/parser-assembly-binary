@@ -9,11 +9,22 @@ CONFIG += c++11
 SOURCES += \
         controller/config/settingscontroller.cpp \
         controller/inputcodecontroller.cpp \
+        controller/parser/parsercontroller.cpp \
         main.cpp \
+        model/assembly/assemblyrowmodel.cpp \
+        model/helper/instructionhelper.cpp \
         model/resultmodel.cpp \
+        model/variable/variablemodel.cpp \
+        service/assembly/assemblyservice.cpp \
+        service/binary/binaryservice.cpp \
         service/exception/serviceexception.cpp \
         service/helper/utilshelper.cpp \
-        service/inputcodeservice.cpp
+        service/inputcodeservice.cpp \
+        service/memorymanager.cpp \
+        service/parser/parserservice.cpp \
+        service/register/registermanager.cpp \
+        service/variable/variablemanager.cpp \
+        service/variable/variableservice.cpp
 
 RESOURCES += qml.qrc
 
@@ -31,7 +42,19 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     controller/config/settingscontroller.h \
     controller/inputcodecontroller.h \
+    controller/parser/parsercontroller.h \
+    model/assembly/assemblyrowmodel.h \
+    model/helper/instructionhelper.h \
     model/resultmodel.h \
+    model/tipooperacaoassemblyenum.h \
+    model/variable/variablemodel.h \
+    service/assembly/assemblyservice.h \
+    service/binary/binaryservice.h \
     service/exception/serviceexception.h \
     service/helper/utilshelper.h \
-    service/inputcodeservice.h
+    service/inputcodeservice.h \
+    service/memorymanager.h \
+    service/parser/parserservice.h \
+    service/register/registermanager.h \
+    service/variable/variablemanager.h \
+    service/variable/variableservice.h
