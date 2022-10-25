@@ -3,20 +3,22 @@
 #include <service/memorymanager.h>
 #include <service/variable/variablemanager.h>
 
-QList<QString> BinaryService::fromAssemblyToBinary( const QList<AssemblyRowModel*>& assemblyRows ) const {
+QList<BinaryRowModel*> BinaryService::fromAssemblyToBinary( const QList<AssemblyRowModel*>& assemblyRows ) const {
 
-    QList<QString> binaryRows = {};
+    QList<BinaryRowModel*> binaryRows = {};
 
     VariableManager* variableManager = &VariableManager::instance();
 
     for( AssemblyRowModel* currentRow : assemblyRows ){
 
+        BinaryRowModel* binaryRow = new BinaryRowModel();
+
         QString rowBinary = "%0 %1";
         QList<QString> valuesStore = {};
 
-        QString codeOperation = tpOperacaoToUpcode( currentRow->typeOperation() );
+        binaryRow->setDsUpcode( tpOperacaoToUpcode( currentRow->typeOperation() ) );
 
-         for( const QString& currentValue : currentRow->values() ){
+        for( const QString& currentValue : currentRow->values() ){
 
              if( variableManager->getAllKeys().contains( currentValue ) ){
                    VariableModel* variable = variableManager->get( currentValue );
@@ -28,11 +30,11 @@ QList<QString> BinaryService::fromAssemblyToBinary( const QList<AssemblyRowModel
 
          }
 
-         QString address = MemoryManager::instance().allocValues( valuesStore );
+         const QString address = MemoryManager::instance().allocValues( valuesStore );
 
-         rowBinary = rowBinary.arg( codeOperation, address );
-
-         binaryRows.append( rowBinary );
+         binaryRow->setAddressMemoryValues( address );
+         binaryRow->setDrawRow( rowBinary.arg( binaryRow->dsUpcode(), address ) );
+         binaryRows.append( binaryRow );
 
     }
 
@@ -40,20 +42,14 @@ QList<QString> BinaryService::fromAssemblyToBinary( const QList<AssemblyRowModel
 
 }
 
-QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum &tpOperacao ) const {
+QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOperacao ) const {
 
-    switch( tpOperacao ){
-       case TipoOperacaoAssemblyEnum::ADD:
-           return "00001";
-       case TipoOperacaoAssemblyEnum::LOAD:
-           return "00002";
-        case TipoOperacaoAssemblyEnum::SUB:
-           return "00003";
-        default:
-            break;
-    }
+    const QMap<TipoOperacaoAssemblyEnum, QString> dsOperacaoByTp = {
+        { TipoOperacaoAssemblyEnum::ADD, "00001" },
+        { TipoOperacaoAssemblyEnum::LOAD, "00002" },
+        { TipoOperacaoAssemblyEnum::SUB, "00003" },
+    };
 
-    return "";
-
+    return dsOperacaoByTp.value( tpOperacao, "" );
 }
 

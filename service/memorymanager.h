@@ -13,6 +13,8 @@ public:
     QString alloc();
     QString allocValues( const QList<QString>& values );
 
+    QString getValuesByAddressMemory( const QString& address ) const;
+
 private:
     QString _currentAddress;
     QMap<QString, QString> _valuesByAddress;

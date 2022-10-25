@@ -3,6 +3,7 @@
 #include <QIcon>
 
 #include "controller/inputcodecontroller.h"
+#include "controller/parser/parsercontroller.h"
 #include "controller/config/settingscontroller.h"
 
 int main(int argc, char *argv[])
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Parser");
     app.setWindowIcon(QIcon("./img/code.png"));
 
+    qmlRegisterType<ParserController>( "br.com.ParserController", 1, 0, "ParserController" );
     qmlRegisterType<InputCodeController>( "br.com.InputCodeController", 1, 0, "InputCodeController" );
     qmlRegisterType<SettingsController>( "br.com.SettingsController", 1, 0, "SettingsController" );
 

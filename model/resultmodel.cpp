@@ -1,9 +1,9 @@
 #include "resultmodel.h"
 
 ResultModel::ResultModel() :
+    _isError(false),
     _title(""),
-    _message(""),
-    _isError(false){}
+    _message(""){}
 
 const QString &ResultModel::title() const {
     return _title;

@@ -6,17 +6,17 @@
 
 void VariableService::fromTextToVariables( QString text ) const {
 
+    VariableManager* instance = &VariableManager::instance();
+
     while( !text.isEmpty() ){
 
         QString currentText = text.left( text.indexOf(";") );
-        currentText = currentText.trimmed();
         text.remove( 0, currentText.size() + 1 );
+        currentText = currentText.trimmed();
 
         QList<QString> valuesRow = currentText.split( ' ' );
 
         VariableModel* variable = nullptr;
-
-        VariableManager* instance = &VariableManager::instance();
 
         while( !valuesRow.isEmpty() ){
 

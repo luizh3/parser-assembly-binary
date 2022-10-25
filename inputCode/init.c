@@ -4,11 +4,7 @@ int main () {
 
     int first = 2;
     int second = 10;
-    int result = ;
 
-    result = first + second;
+    int result = first + second;
 
-    printf( "%d", result );
-
-    return 0;
 }

@@ -7,6 +7,8 @@ import "./components/sidebar"
 import "./components/mensage"
 import "./components/config"
 
+import br.com.ParserController 1.0
+
 ApplicationWindow {
     id: root
     width: 1300
@@ -57,6 +59,10 @@ ApplicationWindow {
         anchors.centerIn: parent
     }
 
+    ParserController {
+        id: control
+    }
+
     Row {
         width: parent.width
         height: parent.height
@@ -86,6 +92,10 @@ ApplicationWindow {
                 width: parent.width
                 height: parent.height - header.height
                 color: root.color
+
+                onConfirmText: function (text) {
+                    control.makeParser(text)
+                }
 
                 onMessage: function (tpError, title, description) {
                     messagePopup.title = title

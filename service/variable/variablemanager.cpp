@@ -17,6 +17,7 @@ VariableModel *VariableManager::get( const QString &name ) const {
 }
 
 void VariableManager::add( const QString &name, VariableModel *variable ) {
+    _nameVariablesOrder.append( name );
     _variables.insert( name, variable );
 }
 
@@ -25,5 +26,9 @@ QList<VariableModel *> VariableManager::getAll() const {
 }
 
 QList<QString> VariableManager::getAllKeys() const{
-    return _variables.keys();
+    return _nameVariablesOrder;
+}
+
+void VariableManager::addNameVariable( const QString &name ) {
+    _nameVariablesOrder.append( name );
 }

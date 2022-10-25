@@ -12,6 +12,7 @@ SOURCES += \
         controller/parser/parsercontroller.cpp \
         main.cpp \
         model/assembly/assemblyrowmodel.cpp \
+        model/binary/binaryrowmodel.cpp \
         model/helper/instructionhelper.cpp \
         model/resultmodel.cpp \
         model/variable/variablemodel.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
         service/memorymanager.cpp \
         service/parser/parserservice.cpp \
         service/register/registermanager.cpp \
+        service/ula/ulaservice.cpp \
         service/variable/variablemanager.cpp \
         service/variable/variableservice.cpp
 
@@ -44,6 +46,7 @@ HEADERS += \
     controller/inputcodecontroller.h \
     controller/parser/parsercontroller.h \
     model/assembly/assemblyrowmodel.h \
+    model/binary/binaryrowmodel.h \
     model/helper/instructionhelper.h \
     model/resultmodel.h \
     model/tipooperacaoassemblyenum.h \
@@ -56,5 +59,6 @@ HEADERS += \
     service/memorymanager.h \
     service/parser/parserservice.h \
     service/register/registermanager.h \
+    service/ula/ulaservice.h \
     service/variable/variablemanager.h \
     service/variable/variableservice.h

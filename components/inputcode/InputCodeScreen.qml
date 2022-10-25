@@ -9,6 +9,7 @@ Rectangle {
     id: inputCodeScreen
     anchors.right: parent.right
 
+    signal confirmText(var text)
     signal message(var tpError, var title, var description)
 
     InputCodeController {
@@ -72,6 +73,7 @@ Rectangle {
             onClicked: {
                 control.writeText(inputTextArea.text)
                 control.onRunCode()
+                inputCodeScreen.confirmText(inputTextArea.text)
             }
         }
     }

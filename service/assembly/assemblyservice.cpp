@@ -12,9 +12,12 @@ QList<AssemblyRowModel*> AssemblyService::fromVariablesToAssemblyRow() const {
     QString drawRowAssembly = "";
     QList<AssemblyRowModel*> rowsAssembly = {};
     RegisterManager* registerManager = &RegisterManager::instance();
-    const QList<VariableModel*> variables = VariableManager::instance().getAll();
 
-    for( VariableModel* current : variables ){
+    const QList<QString> keyVariablesName = VariableManager::instance().getAllKeys();
+
+    for( const QString& key : keyVariablesName ){
+
+        VariableModel* current = VariableManager::instance().get( key );
 
         switch( current->tpOperation() ){
             case TipoOperacaoAssemblyEnum::ADD: {
