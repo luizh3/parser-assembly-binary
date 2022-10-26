@@ -26,7 +26,7 @@ QString MemoryManager::allocValues( const QList<QString>& values) {
     QString valuesAlloc = "";
 
     for( const QString& currentValue : values ){
-        valuesAlloc.append( currentValue.leftJustified( MAX_LENGTH_MEMORY_DATA, '0' ) );
+        valuesAlloc.append( currentValue.rightJustified( MAX_LENGTH_MEMORY_DATA, '0' ) );
     }
 
     const QString address = alloc();

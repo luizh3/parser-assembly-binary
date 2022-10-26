@@ -14,6 +14,7 @@ SOURCES += \
         model/assembly/assemblyrowmodel.cpp \
         model/binary/binaryrowmodel.cpp \
         model/helper/instructionhelper.cpp \
+        model/register/registermodel.cpp \
         model/resultmodel.cpp \
         model/variable/variablemodel.cpp \
         service/assembly/assemblyservice.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     model/assembly/assemblyrowmodel.h \
     model/binary/binaryrowmodel.h \
     model/helper/instructionhelper.h \
+    model/register/registermodel.h \
     model/resultmodel.h \
     model/tipooperacaoassemblyenum.h \
     model/variable/variablemodel.h \

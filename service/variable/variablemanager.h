@@ -11,9 +11,13 @@ public:
 
     QList<VariableModel*> getAll() const;
     VariableModel* get( const QString& name ) const;
+    VariableModel* getByRegisterName( const QString& name ) const;
+
     void add( const QString& name, VariableModel* variable );
 
     QList<QString> getAllKeys() const;
+
+    QList<QString> registersVariables() const;
 
 private:
       QMap<QString,VariableModel*> _variables;
@@ -21,5 +25,7 @@ private:
       QList<QString> _nameVariablesOrder;
 
       void addNameVariable( const QString& name );
+      QMap<QString,VariableModel*> variableByRegister() const;
+
 };
 #endif // VARIABLEMANAGER_H

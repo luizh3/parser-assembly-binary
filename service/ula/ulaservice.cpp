@@ -22,7 +22,7 @@ void UlaService::process( const QList<BinaryRowModel*>& rowsBinary ) const {
                 sum( values.first(), values.last() );
                 break;
             case TipoOperacaoAssemblyEnum::SUB:
-                sum( values.first(), values.last() );
+                sub( values.first(), values.last() );
                 break;
             case TipoOperacaoAssemblyEnum::LOAD:
                 break;
@@ -40,7 +40,7 @@ QList<QString> UlaService::splitValues( QString value ) const {
 
     while( !value.isEmpty() ){
         values.append( value.left( NR_SIZE_BITS_VALUE ) );
-        value.remove( 0, NR_SIZE_BITS_VALUE + 1 );
+        value.remove( 0, NR_SIZE_BITS_VALUE );
     }
 
     return values;
@@ -61,6 +61,21 @@ TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpco
 void UlaService::sum( const QString &first, const QString &second ) const {
 
     qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
+
+    QString result = "";
+    bool hasRest = false;
+
+    for( int index = 0; index < NR_SIZE_BITS_VALUE; index++ ){
+
+        const int firstNum = first[1].digitValue();
+        const int secondNum = second[1].digitValue();
+
+        if( !( firstNum - secondNum ) ){
+            hasRest = true;
+            result.append(0);
+        }
+
+    }
 
 }
 

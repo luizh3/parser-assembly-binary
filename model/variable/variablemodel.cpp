@@ -5,7 +5,7 @@
 VariableModel::VariableModel() :
     _value( 0 ),
     _type( "" ),
-    _registerName( "" ),
+    _register( nullptr ),
     _params( {} ){}
 
 QList<QString> VariableModel::paramsWithoutOperators() const {
@@ -36,15 +36,7 @@ TipoOperacaoAssemblyEnum VariableModel::tpOperation() const {
 
 }
 
-const QString &VariableModel::registerName() const {
-    return _registerName;
-}
-
-void VariableModel::setRegisterName(const QString &registerName) {
-    _registerName = registerName;
-}
-
-void VariableModel::addParam(const QString &param) {
+void VariableModel::addParam( const QString &param ) {
     _params.append( param );
 }
 
@@ -62,4 +54,12 @@ const QString &VariableModel::type() const {
 
 void VariableModel::setType( const QString &newType ) {
     _type = newType;
+}
+
+RegisterModel* VariableModel::getRegister() const {
+    return _register;
+}
+
+void VariableModel::setRegister( RegisterModel *newRegister ){
+    _register = newRegister;
 }

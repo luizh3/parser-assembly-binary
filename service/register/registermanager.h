@@ -3,16 +3,22 @@
 
 #include <QList>
 #include <QString>
+#include <model/register/registermodel.h>
 
 class RegisterManager{
 public:
     RegisterManager();
+    ~RegisterManager();
     static RegisterManager& instance();
 
-    QString getOne();
+    RegisterModel* getOne();
+
+    const QList<RegisterModel*>& registers() const;
+    void setRegisters( const QList<RegisterModel*>& newRegisters );
 
 private:
-    QList<QString> _nameRegisters;
+    QList<QString> _registersAlloc;
+    QList<RegisterModel*> _registers;
 };
 
 #endif // REGISTERMANAGER_H

@@ -20,10 +20,10 @@ QList<BinaryRowModel*> BinaryService::fromAssemblyToBinary( const QList<Assembly
 
         for( const QString& currentValue : currentRow->values() ){
 
-             if( variableManager->getAllKeys().contains( currentValue ) ){
-                   VariableModel* variable = variableManager->get( currentValue );
-                   valuesStore.append( QString().setNum( variable->value(), 2 ) );
-                   continue;
+             if( variableManager->registersVariables().contains( currentValue ) ){
+                const VariableModel* variable = variableManager->getByRegisterName( currentValue );
+                valuesStore.append( QString().setNum( variable->value(), 2 ) );
+                continue;
              }
 
              valuesStore.append( QString().setNum( currentValue.toInt(), 2 ) );
