@@ -1,6 +1,7 @@
 #include "assemblyrowmodel.h"
 
 AssemblyRowModel::AssemblyRowModel() :
+    _variableResultOperation( nullptr ),
     _typeOperation( TipoOperacaoAssemblyEnum::UNDEFINED ),
     _rawTextRow( "" ),
     _addressMemoryRow( "" ),
@@ -37,5 +38,13 @@ const QString &AssemblyRowModel::addressMemoryRow() const{
 
 void AssemblyRowModel::setAddressMemoryRow( const QString& newAddressMemoryRow ) {
     _addressMemoryRow = newAddressMemoryRow;
+}
+
+VariableModel *AssemblyRowModel::variableResultOperation() const {
+    return _variableResultOperation;
+}
+
+void AssemblyRowModel::setVariableResultOperation( VariableModel* newVariableResultOperation ) {
+    _variableResultOperation = newVariableResultOperation;
 }
 

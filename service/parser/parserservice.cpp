@@ -26,9 +26,23 @@ void ParserService::makeParser( QString dsText ) const {
     VariableService().fromTextToVariables( dsText );
 
     QList<AssemblyRowModel*> assemblyRows = AssemblyService().fromVariablesToAssemblyRow();
-    QList<BinaryRowModel*> binaryRows = BinaryService().fromAssemblyToBinary( assemblyRows );
 
-    UlaService().process( binaryRows );
+    QList<const BinaryRowModel*> binaryRows = {};
+
+    for( AssemblyRowModel* assemblyRow : qAsConst( assemblyRows ) ){
+
+       const BinaryRowModel* binaryRow = BinaryService().fromAssemblyToBinary( assemblyRow );
+
+       const QString result = UlaService().process( binaryRow );
+
+       // TODO maybe to do a method that validated if is expected a result by type operation
+       if( assemblyRow->variableResultOperation() ){
+           assemblyRow->variableResultOperation()->setValue( BinaryService().fromBinary( result ) );
+       }
+
+       binaryRows.append( binaryRow );
+
+    }
 
     qDebug() << binaryRows;
 

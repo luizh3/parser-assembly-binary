@@ -4,6 +4,7 @@
 #include <QList>
 #include <QString>
 
+#include <model/variable/variablemodel.h>
 #include <model/tipooperacaoassemblyenum.h>
 
 class AssemblyRowModel {
@@ -22,7 +23,11 @@ public:
     const QString &addressMemoryRow() const;
     void setAddressMemoryRow( const QString& newAddressMemoryRow );
 
+    VariableModel *variableResultOperation() const;
+    void setVariableResultOperation(VariableModel *newVariableResultOperation);
+
 private:
+    VariableModel* _variableResultOperation;
     TipoOperacaoAssemblyEnum _typeOperation;
     QString _rawTextRow;
     QString _addressMemoryRow;

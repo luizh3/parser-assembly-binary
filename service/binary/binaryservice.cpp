@@ -1,44 +1,43 @@
 #include "binaryservice.h"
 
 #include <service/memorymanager.h>
+#include <service/ula/ulaservice.h>
 #include <service/variable/variablemanager.h>
 
-QList<BinaryRowModel*> BinaryService::fromAssemblyToBinary( const QList<AssemblyRowModel*>& assemblyRows ) const {
 
-    QList<BinaryRowModel*> binaryRows = {};
+namespace {
+    constexpr const int NR_SIZE_INT = 10;
+}
+
+BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* assemblyRow ) const {
 
     VariableManager* variableManager = &VariableManager::instance();
 
-    for( AssemblyRowModel* currentRow : assemblyRows ){
+    BinaryRowModel* binaryRow = new BinaryRowModel();
 
-        BinaryRowModel* binaryRow = new BinaryRowModel();
+    QString rowBinary = "%0 %1";
+    QList<QString> valuesStore = {};
 
-        QString rowBinary = "%0 %1";
-        QList<QString> valuesStore = {};
+    binaryRow->setDsUpcode( tpOperacaoToUpcode( assemblyRow->typeOperation() ) );
 
-        binaryRow->setDsUpcode( tpOperacaoToUpcode( currentRow->typeOperation() ) );
+    for( const QString& currentValue : assemblyRow->values() ){
 
-        for( const QString& currentValue : currentRow->values() ){
+        if( variableManager->registersVariables().contains( currentValue ) ){
+            const VariableModel* variable = variableManager->getByRegisterName( currentValue );
+            valuesStore.append( toBinary( variable->value() ) );
+            continue;
+        }
 
-             if( variableManager->registersVariables().contains( currentValue ) ){
-                const VariableModel* variable = variableManager->getByRegisterName( currentValue );
-                valuesStore.append( QString().setNum( variable->value(), 2 ) );
-                continue;
-             }
-
-             valuesStore.append( QString().setNum( currentValue.toInt(), 2 ) );
-
-         }
-
-         const QString address = MemoryManager::instance().allocValues( valuesStore );
-
-         binaryRow->setAddressMemoryValues( address );
-         binaryRow->setDrawRow( rowBinary.arg( binaryRow->dsUpcode(), address ) );
-         binaryRows.append( binaryRow );
+        valuesStore.append( toBinary( currentValue.toInt() ) );
 
     }
 
-    return binaryRows;
+    const QString address = MemoryManager::instance().allocValues( valuesStore );
+
+    binaryRow->setAddressMemoryValues( address );
+    binaryRow->setRawRow( rowBinary.arg( binaryRow->dsUpcode(), address ) );
+
+    return binaryRow;
 
 }
 
@@ -52,4 +51,37 @@ QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOpe
 
     return dsOperacaoByTp.value( tpOperacao, "" );
 }
+
+QString BinaryService::toBinary( unsigned int number ) const {
+
+    QString binary = "";
+
+    while( number != 0 ){
+        binary.prepend( QString::number( number % 2 ) );
+        number /= 2;
+    }
+
+    return binary;
+
+}
+
+int BinaryService::fromBinary( const QString& binary ) const {
+
+    int nrBinary = binary.toInt();
+    int nrResult = 0;
+    int base = 1;
+
+    while( nrBinary ) {
+
+        int last_digit = nrBinary % NR_SIZE_INT;
+        nrBinary = nrBinary / NR_SIZE_INT;
+
+        nrResult += last_digit * base;
+
+        base *= 2;
+    }
+
+    return nrResult;
+}
+
 

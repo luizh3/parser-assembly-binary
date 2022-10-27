@@ -5,33 +5,29 @@
 #include <service/memorymanager.h>
 
 namespace {
+    constexpr const int NR_SIZE_INT = 10;
+    constexpr const int NR_BASE_BINARY = 2;
     constexpr const int NR_SIZE_BITS_VALUE = 10;
 }
 
-void UlaService::process( const QList<BinaryRowModel*>& rowsBinary ) const {
+QString UlaService::process( const BinaryRowModel* binary ) const {
 
     MemoryManager* memoryManager = &MemoryManager::instance();
+    const TipoOperacaoAssemblyEnum tpOperacao = tpOperacaoByDsUpcode( binary->dsUpcode() );
+    const QList<QString> values = splitValues( memoryManager->getValuesByAddressMemory( binary->addressMemoryValues() ) );
 
-    for( const BinaryRowModel* binary : rowsBinary ){
+    switch ( tpOperacao ) {
+        case TipoOperacaoAssemblyEnum::ADD:
+            return sum( values.first(), values.last() );
+        case TipoOperacaoAssemblyEnum::SUB:
+            return sub( values.first(), values.last() );
+        case TipoOperacaoAssemblyEnum::LOAD:
+            break;
+        default:
+            break;
+     }
 
-        const TipoOperacaoAssemblyEnum tpOperacao = tpOperacaoByDsUpcode( binary->dsUpcode() );
-        const QList<QString> values = splitValues( memoryManager->getValuesByAddressMemory( binary->addressMemoryValues() ) );
-
-        switch ( tpOperacao ) {
-            case TipoOperacaoAssemblyEnum::ADD:
-                sum( values.first(), values.last() );
-                break;
-            case TipoOperacaoAssemblyEnum::SUB:
-                sub( values.first(), values.last() );
-                break;
-            case TipoOperacaoAssemblyEnum::LOAD:
-                break;
-            default:
-                break;
-        }
-
-    }
-
+    return "";
 }
 
 QList<QString> UlaService::splitValues( QString value ) const {
@@ -58,29 +54,38 @@ TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpco
     return dsOperacaoByTp.value( dsUpcode, TipoOperacaoAssemblyEnum::UNDEFINED );
 }
 
-void UlaService::sum( const QString &first, const QString &second ) const {
+QString UlaService::sum( const QString& first, const QString& second ) const {
 
     qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
 
-    QString result = "";
-    bool hasRest = false;
+    int nrFirst = first.toInt();
+    int nrSecond = second.toInt();
 
-    for( int index = 0; index < NR_SIZE_BITS_VALUE; index++ ){
+    int rest = 0;
+    QString sum = "";
 
-        const int firstNum = first[1].digitValue();
-        const int secondNum = second[1].digitValue();
+    while( nrFirst != 0 || nrSecond != 0 )  {
 
-        if( !( firstNum - secondNum ) ){
-            hasRest = true;
-            result.append(0);
-        }
+        sum.prepend( QString::number( ( ( nrFirst % NR_SIZE_INT ) + ( nrSecond % NR_SIZE_INT ) + rest ) % NR_BASE_BINARY )[0] );
+
+        rest = (int)( ( ( nrFirst % NR_SIZE_INT ) + ( nrSecond % NR_SIZE_INT ) + rest ) / NR_BASE_BINARY );
+
+        nrFirst /= NR_SIZE_INT;
+        nrSecond /= NR_SIZE_INT;
 
     }
 
+    if ( rest != 0 ) {
+        sum.prepend( QString::number( rest )[0] ) ;
+    }
+
+    return sum;
 }
 
-void UlaService::sub( const QString &first, const QString &second ) const {
+QString UlaService::sub( const QString &first, const QString &second ) const {
 
-    qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
+    qDebug() << " UlaService::sub [FIRST]" << first << "[SECOND]" << second;
+
+    return "0";
 
 }

@@ -6,10 +6,9 @@
 #include <service/register/registermanager.h>
 #include <service/variable/variablemanager.h>
 
-
 QList<AssemblyRowModel*> AssemblyService::fromVariablesToAssemblyRow() const {
 
-    QString drawRowAssembly = "";
+    QString rawRowAssembly = "";
     QList<AssemblyRowModel*> rowsAssembly = {};
     RegisterManager* registerManager = &RegisterManager::instance();
 
@@ -23,9 +22,11 @@ QList<AssemblyRowModel*> AssemblyService::fromVariablesToAssemblyRow() const {
             case TipoOperacaoAssemblyEnum::ADD: {
                 current->setRegister( registerManager->getOne() );
                 const QList<QString> params = toAsmInstruction( current->paramsWithoutOperators() );
-                drawRowAssembly = QString( "ADD %0, [%1], [%2]").arg( current->getRegister()->nameRegister(), params.first(), params.last() );
+                rawRowAssembly = QString( "ADD %0, [%1], [%2]").arg( current->getRegister()->nameRegister(), params.first(), params.last() );
 
-                AssemblyRowModel* assemblyRow = toAssemblyRow( drawRowAssembly, { params.first(), params.last() }, current->tpOperation() );
+                AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, { params.first(), params.last() }, current->tpOperation() );
+                assemblyRow->setVariableResultOperation( current );
+
                 rowsAssembly.append( assemblyRow );
 
                 break;
@@ -33,21 +34,23 @@ QList<AssemblyRowModel*> AssemblyService::fromVariablesToAssemblyRow() const {
             case TipoOperacaoAssemblyEnum::SUB: {
                 current->setRegister( registerManager->getOne() );
                 const QList<QString> params = toAsmInstruction( current->paramsWithoutOperators() );
-                drawRowAssembly = QString( "SUB %0, [%1], [%2]").arg( current->getRegister()->nameRegister(), params.first(), params.last() );
+                rawRowAssembly = QString( "SUB %0, [%1], [%2]").arg( current->getRegister()->nameRegister(), params.first(), params.last() );
 
-                AssemblyRowModel* assemblyRow = toAssemblyRow( drawRowAssembly, { params.first(), params.last() }, current->tpOperation() );
+                AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, { params.first(), params.last() }, current->tpOperation() );
+                assemblyRow->setVariableResultOperation( current );
+
                 rowsAssembly.append( assemblyRow );
 
                 break;
             }
             case TipoOperacaoAssemblyEnum::LOAD: {
                 current->setRegister( registerManager->getOne() );
-                drawRowAssembly = QString( "LDR %0, %1").arg( current->getRegister()->nameRegister(), current->paramsWithoutOperators().join("") );
+                rawRowAssembly = QString( "LDR %0, %1").arg( current->getRegister()->nameRegister(), current->paramsWithoutOperators().join("") );
 
                 const QString value = current->paramsWithoutOperators().join("");
                 current->setValue( value.toInt() );
 
-                AssemblyRowModel* assemblyRow = toAssemblyRow( drawRowAssembly, { value }, current->tpOperation() );
+                AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, { value }, current->tpOperation() );
                 rowsAssembly.append( assemblyRow );
 
                 break;
@@ -81,7 +84,7 @@ QList<QString> AssemblyService::toAsmInstruction( const QList<QString> &params )
     return values;
 }
 
-AssemblyRowModel* AssemblyService::toAssemblyRow( const QString &rawRow, const QList<QString>& values, const TipoOperacaoAssemblyEnum& tpOperation ) const{
+AssemblyRowModel* AssemblyService::toAssemblyRow( const QString& rawRow, const QList<QString>& values, const TipoOperacaoAssemblyEnum& tpOperation ) const{
 
     AssemblyRowModel* assemblyRow = new AssemblyRowModel();
 

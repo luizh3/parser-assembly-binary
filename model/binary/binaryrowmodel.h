@@ -10,15 +10,15 @@ public:
     const QString &addressMemoryValues() const;
     void setAddressMemoryValues(const QString &newAddressMemoryValues);
 
-    const QString &drawRow() const;
-    void setDrawRow( const QString &newDrawRow );
+    const QString &rawRow() const;
+    void setRawRow( const QString &newRawRow );
 
     const QString &dsUpcode() const;
     void setDsUpcode(const QString &newDsUpcode);
 
 private:
     QString _dsUpcode;
-    QString _drawRow;
+    QString _rawRow;
     QString _addressMemoryValues;
 };
 

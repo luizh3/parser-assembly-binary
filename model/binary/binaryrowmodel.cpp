@@ -2,7 +2,7 @@
 
 BinaryRowModel::BinaryRowModel() :
     _dsUpcode( "" ),
-    _drawRow( "" ),
+    _rawRow( "" ),
     _addressMemoryValues( "" ){}
 
 const QString& BinaryRowModel::addressMemoryValues() const {
@@ -13,12 +13,12 @@ void BinaryRowModel::setAddressMemoryValues( const QString &newAddressMemoryValu
     _addressMemoryValues = newAddressMemoryValues;
 }
 
-const QString &BinaryRowModel::drawRow() const {
-    return _drawRow;
+const QString &BinaryRowModel::rawRow() const {
+    return _rawRow;
 }
 
-void BinaryRowModel::setDrawRow( const QString &newDrawRow ) {
-    _drawRow = newDrawRow;
+void BinaryRowModel::setRawRow( const QString &newDrawRow ) {
+    _rawRow = newDrawRow;
 }
 
 const QString &BinaryRowModel::dsUpcode() const {

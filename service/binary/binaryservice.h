@@ -9,9 +9,11 @@
 
 class BinaryService {
 public:
-    QList<BinaryRowModel*> fromAssemblyToBinary( const QList<AssemblyRowModel*>& assemblyRows ) const;
+    BinaryRowModel* fromAssemblyToBinary( const AssemblyRowModel* assemblyRows ) const;
+    int fromBinary( const QString& binary ) const;
 private:
     QString tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOperacao ) const;
+    QString toBinary( unsigned int number ) const;
 };
 
 #endif // BINARYSERVICE_H

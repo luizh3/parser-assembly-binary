@@ -9,13 +9,13 @@
 
 class UlaService {
 public:
-    void process( const QList<BinaryRowModel*>& rowsBinary ) const;
+    QString process( const BinaryRowModel* rowsBinary ) const;
 private:
     QList<QString> splitValues( QString value ) const;
     TipoOperacaoAssemblyEnum tpOperacaoByDsUpcode( const QString& dsUpcode ) const;
 
-    void sum( const QString& first, const QString& second ) const;
-    void sub( const QString& first, const QString& second ) const;
+    QString sum( const QString& first, const QString& second ) const;
+    QString sub( const QString& first, const QString& second ) const;
 };
 
 #endif // ULASERVICE_H
