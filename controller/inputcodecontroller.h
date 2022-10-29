@@ -22,6 +22,7 @@ public slots:
 
     void runSync( const std::function<void()>& function ) const;
 signals:
+    void codeValid() const;
     void showMessage( MessageTypeEnum tpMessage, const QString title, const QString value ) const;
 private:
     QByteArray execCode() const;

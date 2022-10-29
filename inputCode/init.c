@@ -7,6 +7,6 @@ int main () {
 
     int result = first + second;
 
-    int more = result + 1;
+    int more = result + 2;
 
 }

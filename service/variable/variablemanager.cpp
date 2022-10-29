@@ -55,6 +55,12 @@ QList<QString> VariableManager::registersVariables() const {
     return variableByRegister().keys();
 }
 
+void VariableManager::reset() {
+    qDeleteAll( _variables );
+    _variables.clear();
+    _nameVariablesOrder.clear();
+}
+
 void VariableManager::addNameVariable( const QString &name ) {
     _nameVariablesOrder.append( name );
 }

@@ -6,15 +6,16 @@
 class RegisterModel{
 public:
     RegisterModel( const QString& name );
-    const QString &nameRegister() const;
-    void setNameRegister(const QString &newNameRegister);
+
+    const QString& nameRegister() const;
+    void setNameRegister( const QString &newNameRegister );
 
     bool isActive() const;
-    void setFgActive(bool newFgActive);
+    void setFgActive( bool newFgActive );
 
 private:
-    QString _nameRegister;
     bool _fgActive;
+    QString _nameRegister;
 };
 
 #endif // REGISTERMODEL_H

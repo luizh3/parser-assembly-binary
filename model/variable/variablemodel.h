@@ -19,16 +19,16 @@ public:
     int value() const;
     void setValue( int newValue );
 
-    const QString &type() const;
-    void setType( const QString &newType );
+    const QString& type() const;
+    void setType( const QString& newType );
 
     RegisterModel* getRegister() const;
     void setRegister(RegisterModel *newRegister);
 
 private:
+    RegisterModel* _register;
     int _value;
     QString _type;
-    RegisterModel* _register;
     QList<QString> _params;
 };
 

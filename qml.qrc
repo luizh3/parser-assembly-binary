@@ -20,5 +20,9 @@
         <file>img/close-icon.png</file>
         <file>components/ButtonCustom.qml</file>
         <file>img/code.png</file>
+        <file>components/result/ResultCodeScreen.qml</file>
+        <file>components/buttons/ButtonGroupSelect.qml</file>
+        <file>components/buttons/ButtonSelect.qml</file>
+        <file>img/esquerda-seta.png</file>
     </qresource>
 </RCC>

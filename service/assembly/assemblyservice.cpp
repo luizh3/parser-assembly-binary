@@ -1,7 +1,5 @@
 #include "assemblyservice.h"
 
-#include <model/variable/variablemodel.h>
-
 #include <service/memorymanager.h>
 #include <service/register/registermanager.h>
 #include <service/variable/variablemanager.h>

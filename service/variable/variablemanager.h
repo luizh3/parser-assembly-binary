@@ -19,6 +19,8 @@ public:
 
     QList<QString> registersVariables() const;
 
+    void reset();
+
 private:
       QMap<QString,VariableModel*> _variables;
       //TODO This exist because map is ordered by length or size of key, now i dont have time to fix this of another way

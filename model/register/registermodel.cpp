@@ -1,8 +1,8 @@
 #include "registermodel.h"
 
 RegisterModel::RegisterModel( const QString& name ) :
-    _nameRegister( name ),
-    _fgActive( false ){ }
+    _fgActive( false ),
+    _nameRegister( name ){}
 
 const QString &RegisterModel::nameRegister() const {
     return _nameRegister;

@@ -15,7 +15,9 @@ SOURCES += \
         model/binary/binaryrowmodel.cpp \
         model/helper/instructionhelper.cpp \
         model/register/registermodel.cpp \
+        model/result/parserresultmodel.cpp \
         model/resultmodel.cpp \
+        model/ula/ulamodel.cpp \
         model/variable/variablemodel.cpp \
         service/assembly/assemblyservice.cpp \
         service/binary/binaryservice.cpp \
@@ -50,8 +52,10 @@ HEADERS += \
     model/binary/binaryrowmodel.h \
     model/helper/instructionhelper.h \
     model/register/registermodel.h \
+    model/result/parserresultmodel.h \
     model/resultmodel.h \
     model/tipooperacaoassemblyenum.h \
+    model/ula/ulamodel.h \
     model/variable/variablemodel.h \
     service/assembly/assemblyservice.h \
     service/binary/binaryservice.h \

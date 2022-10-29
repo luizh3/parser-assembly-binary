@@ -1,13 +1,8 @@
 #include "registermanager.h"
 
-#include <new>
-
 RegisterManager::RegisterManager() :
     _registersAlloc( { "RA", "RB", "RC", "RD", "RE", "RJ" } ) {
-
-    for( const QString& registerName : qAsConst( _registersAlloc ) ){
-        _registers.append( new RegisterModel( registerName ) );
-    }
+    init();
 }
 
 RegisterManager::~RegisterManager() {
@@ -18,9 +13,6 @@ RegisterManager &RegisterManager::instance() {
     static RegisterManager registerManager;
     return registerManager;
 }
-
-// TODO criar um register model
-// Criar uma fg de utilizado
 
 RegisterModel* RegisterManager::getOne() {
 
@@ -36,10 +28,18 @@ RegisterModel* RegisterManager::getOne() {
     return firstRegister;
 }
 
-const QList<RegisterModel*>& RegisterManager::registers() const {
-    return _registers;
+bool RegisterManager::hasRegisterByName( const QString &name ) const {
+    return _registersAlloc.contains( name );
 }
 
-void RegisterManager::setRegisters( const QList<RegisterModel*>& newRegisters ) {
-    _registers = newRegisters;
+void RegisterManager::reset() {
+    qDeleteAll( _registers );
+    _registers.clear();
+    init();
+}
+
+void RegisterManager::init() {
+    for( const QString& registerName : qAsConst( _registersAlloc ) ){
+        _registers.append( new RegisterModel( registerName ) );
+    }
 }

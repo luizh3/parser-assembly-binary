@@ -9,14 +9,18 @@ class RegisterManager{
 public:
     RegisterManager();
     ~RegisterManager();
+
     static RegisterManager& instance();
 
     RegisterModel* getOne();
 
-    const QList<RegisterModel*>& registers() const;
-    void setRegisters( const QList<RegisterModel*>& newRegisters );
+    bool hasRegisterByName( const QString& name ) const;
+
+    void reset();
 
 private:
+    void init();
+
     QList<QString> _registersAlloc;
     QList<RegisterModel*> _registers;
 };

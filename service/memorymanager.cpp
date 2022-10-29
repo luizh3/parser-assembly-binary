@@ -39,3 +39,8 @@ QString MemoryManager::allocValues( const QList<QString>& values) {
 QString MemoryManager::getValuesByAddressMemory( const QString &address ) const {
     return _valuesByAddress.value( address, "" );
 }
+
+void MemoryManager::reset() {
+    _currentAddress = "0";
+    _valuesByAddress.clear();
+}

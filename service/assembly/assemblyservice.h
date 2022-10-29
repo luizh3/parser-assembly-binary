@@ -1,8 +1,6 @@
 #ifndef ASSEMBLYSERVICE_H
 #define ASSEMBLYSERVICE_H
 
-#include <QList>
-
 #include <model/assembly/assemblyrowmodel.h>
 
 class AssemblyService {

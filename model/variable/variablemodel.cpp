@@ -3,16 +3,16 @@
 #include <model/helper/instructionhelper.h>
 
 VariableModel::VariableModel() :
+    _register( nullptr ),
     _value( 0 ),
     _type( "" ),
-    _register( nullptr ),
     _params( {} ){}
 
 QList<QString> VariableModel::paramsWithoutOperators() const {
 
     QList<QString> params = {};
 
-    for( const QString& param : _params ){
+    for( const QString& param : qAsConst( _params ) ){
         if( !InstructionHelper::allOperators().contains( param ) ){
             params.append( param );
         }
@@ -60,6 +60,6 @@ RegisterModel* VariableModel::getRegister() const {
     return _register;
 }
 
-void VariableModel::setRegister( RegisterModel *newRegister ){
+void VariableModel::setRegister( RegisterModel* newRegister ){
     _register = newRegister;
 }

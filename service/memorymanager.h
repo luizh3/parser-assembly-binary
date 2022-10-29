@@ -15,6 +15,8 @@ public:
 
     QString getValuesByAddressMemory( const QString& address ) const;
 
+    void reset();
+
 private:
     QString _currentAddress;
     QMap<QString, QString> _valuesByAddress;

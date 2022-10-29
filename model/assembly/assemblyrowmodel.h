@@ -17,14 +17,14 @@ public:
     const QList<QString>& values() const;
     void setValues(const QList<QString>& newValues);
 
-    const QString &rawTextRow() const;
+    const QString& rawTextRow() const;
     void setRawTextRow( const QString& newRawTextRow );
 
-    const QString &addressMemoryRow() const;
+    const QString& addressMemoryRow() const;
     void setAddressMemoryRow( const QString& newAddressMemoryRow );
 
     VariableModel *variableResultOperation() const;
-    void setVariableResultOperation(VariableModel *newVariableResultOperation);
+    void setVariableResultOperation( VariableModel *newVariableResultOperation );
 
 private:
     VariableModel* _variableResultOperation;

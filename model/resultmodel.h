@@ -6,11 +6,11 @@
 class ResultModel {
 public:
     ResultModel();
-    const QString &title() const;
-    void setTitle( const QString &newTitle );
+    const QString& title() const;
+    void setTitle( const QString& newTitle );
 
-    const QString &message() const;
-    void setMessage( const QString &newMessage );
+    const QString& message() const;
+    void setMessage( const QString& newMessage );
 
     bool isError() const;
     void setIsError(bool newIsError);

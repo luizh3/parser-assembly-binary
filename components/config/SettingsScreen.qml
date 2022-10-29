@@ -56,9 +56,11 @@ Popup {
     }
 
     Column {
-        width: parent.width / 1.3
-        height: parent.height / 1.3
-        anchors.centerIn: parent
+        width: parent.width / 1.2
+        height: parent.height / 1.2
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 30
 
         Column {
             width: parent.width

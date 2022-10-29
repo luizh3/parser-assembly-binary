@@ -25,6 +25,7 @@ void InputCodeController::onRunCode() const {
 
     if( !isRunCode ){
         qInfo() << "InputCodeController::onRunCode [IS_RUN_CODE]" << isRunCode << "O codigo nao sera executado.";
+        emit codeValid();
         return;
     }
 
@@ -43,7 +44,10 @@ void InputCodeController::onRunCode() const {
 
     if( result.isError() ){
         emit showMessage( MessageTypeEnum::ERROR, result.title(), result.message() );
+        return;
     }
+
+    emit codeValid();
 
     qInfo() << "InputCodeController::onRunCode";
 

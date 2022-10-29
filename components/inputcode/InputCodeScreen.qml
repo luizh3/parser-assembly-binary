@@ -17,6 +17,10 @@ Rectangle {
         onShowMessage: function (tpError, title, description) {
             inputCodeScreen.message(tpError, title, description)
         }
+
+        onCodeValid: {
+            inputCodeScreen.confirmText(inputTextArea.text)
+        }
     }
 
     Column {
@@ -73,7 +77,6 @@ Rectangle {
             onClicked: {
                 control.writeText(inputTextArea.text)
                 control.onRunCode()
-                inputCodeScreen.confirmText(inputTextArea.text)
             }
         }
     }

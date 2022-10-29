@@ -16,7 +16,7 @@ void AssemblyRowModel::setTypeOperation( TipoOperacaoAssemblyEnum newTypeOperati
     _typeOperation = newTypeOperation;
 }
 
-const QList<QString> &AssemblyRowModel::values() const {
+const QList<QString>& AssemblyRowModel::values() const {
     return _values;
 }
 
@@ -24,7 +24,7 @@ void AssemblyRowModel::setValues( const QList<QString>& newValues ) {
     _values = newValues;
 }
 
-const QString &AssemblyRowModel::rawTextRow() const {
+const QString& AssemblyRowModel::rawTextRow() const {
     return _rawTextRow;
 }
 
@@ -32,7 +32,7 @@ void AssemblyRowModel::setRawTextRow( const QString& newRawTextLinha ) {
     _rawTextRow = newRawTextLinha;
 }
 
-const QString &AssemblyRowModel::addressMemoryRow() const{
+const QString& AssemblyRowModel::addressMemoryRow() const{
     return _addressMemoryRow;
 }
 
@@ -40,7 +40,7 @@ void AssemblyRowModel::setAddressMemoryRow( const QString& newAddressMemoryRow )
     _addressMemoryRow = newAddressMemoryRow;
 }
 
-VariableModel *AssemblyRowModel::variableResultOperation() const {
+VariableModel* AssemblyRowModel::variableResultOperation() const {
     return _variableResultOperation;
 }
 

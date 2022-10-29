@@ -3,13 +3,13 @@
 
 #include <QList>
 
-#include <model/tipooperacaoassemblyenum.h>
-
+#include <model/ula/ulamodel.h>
 #include <model/binary/binaryrowmodel.h>
+#include <model/tipooperacaoassemblyenum.h>
 
 class UlaService {
 public:
-    QString process( const BinaryRowModel* rowsBinary ) const;
+    UlaModel* process( const BinaryRowModel* rowsBinary ) const;
 private:
     QList<QString> splitValues( QString value ) const;
     TipoOperacaoAssemblyEnum tpOperacaoByDsUpcode( const QString& dsUpcode ) const;

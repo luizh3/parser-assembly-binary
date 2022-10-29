@@ -5,19 +5,19 @@ ResultModel::ResultModel() :
     _title(""),
     _message(""){}
 
-const QString &ResultModel::title() const {
+const QString& ResultModel::title() const {
     return _title;
 }
 
-void ResultModel::setTitle( const QString &newTitle ) {
+void ResultModel::setTitle( const QString& newTitle ) {
     _title = newTitle;
 }
 
-const QString &ResultModel::message() const {
+const QString& ResultModel::message() const {
     return _message;
 }
 
-void ResultModel::setMessage( const QString &newMessage ) {
+void ResultModel::setMessage( const QString& newMessage ) {
     _message = newMessage;
 }
 

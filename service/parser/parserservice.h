@@ -3,10 +3,22 @@
 
 #include <QDebug>
 
+#include <model/ula/ulamodel.h>
+#include <model/binary/binaryrowmodel.h>
+#include <model/result/parserresultmodel.h>
+#include <model/assembly/assemblyrowmodel.h>
+
 class ParserService {
 public:
     void formatText( QString& text ) const;
-    void makeParser( QString dsText ) const;
+    ParserResultModel* makeParser( QString dsText ) const;
+private:
+    ParserResultModel* toParserResult( const QList<AssemblyRowModel*>& assemblyRows, const QList<BinaryRowModel*>& binaryRows, const QList<UlaModel*>& operationsUla ) const;
+
+    QString assemblyRowToRawText( const QList<AssemblyRowModel*>& rows ) const;
+    QString binaryRowToRawText(  const QList<BinaryRowModel*>& rows ) const;
+    QString operationsUlaToRawText(  const QList<UlaModel*>& operationsUla ) const;
+
 };
 
 #endif // PARSERSERVICE_H

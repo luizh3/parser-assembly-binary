@@ -10,24 +10,33 @@ namespace {
     constexpr const int NR_SIZE_BITS_VALUE = 10;
 }
 
-QString UlaService::process( const BinaryRowModel* binary ) const {
+UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
 
     MemoryManager* memoryManager = &MemoryManager::instance();
     const TipoOperacaoAssemblyEnum tpOperacao = tpOperacaoByDsUpcode( binary->dsUpcode() );
     const QList<QString> values = splitValues( memoryManager->getValuesByAddressMemory( binary->addressMemoryValues() ) );
 
+    QString resultOperation = "";
+
     switch ( tpOperacao ) {
         case TipoOperacaoAssemblyEnum::ADD:
-            return sum( values.first(), values.last() );
+            resultOperation = sum( values.first(), values.last() );
+            break;
         case TipoOperacaoAssemblyEnum::SUB:
-            return sub( values.first(), values.last() );
+            resultOperation = sub( values.first(), values.last() );
+            break;
         case TipoOperacaoAssemblyEnum::LOAD:
             break;
         default:
             break;
      }
 
-    return "";
+    UlaModel* ulaModel = new UlaModel();
+    ulaModel->setMemoryAddress( binary->addressMemoryValues() );
+    ulaModel->setResult( resultOperation );
+    ulaModel->setValues( values );
+
+    return ulaModel;
 }
 
 QList<QString> UlaService::splitValues( QString value ) const {
@@ -46,9 +55,9 @@ QList<QString> UlaService::splitValues( QString value ) const {
 TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpcode ) const {
 
     const QMap<QString, TipoOperacaoAssemblyEnum> dsOperacaoByTp = {
-        { "00001", TipoOperacaoAssemblyEnum::ADD },
-        { "00002", TipoOperacaoAssemblyEnum::LOAD },
-        { "00003", TipoOperacaoAssemblyEnum::SUB },
+        { "00001", TipoOperacaoAssemblyEnum::LOAD },
+        { "00010", TipoOperacaoAssemblyEnum::ADD },
+        { "00011", TipoOperacaoAssemblyEnum::SUB },
     };
 
     return dsOperacaoByTp.value( dsUpcode, TipoOperacaoAssemblyEnum::UNDEFINED );

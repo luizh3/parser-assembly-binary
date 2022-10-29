@@ -6,6 +6,7 @@ import "./components/inputcode"
 import "./components/sidebar"
 import "./components/mensage"
 import "./components/config"
+import "./components/result"
 
 import br.com.ParserController 1.0
 
@@ -24,11 +25,19 @@ ApplicationWindow {
         //console.log(Qt.fontFamilies())
     }
 
+    property var currentScreen: inputCodeScreen
+
     // TODO rever esse metodo, ver se existe algum metodo/enum do proprio QT
     property bool hasWindowed: true
     function changeVisibleMode() {
         hasWindowed = !hasWindowed
         root.visibility = hasWindowed ? "Windowed" : "FullScreen"
+    }
+
+    function changeScreenVisible(newScreen) {
+        currentScreen.visible = false
+        currentScreen = newScreen
+        currentScreen.visible = true
     }
 
     MouseArea {
@@ -61,6 +70,10 @@ ApplicationWindow {
 
     ParserController {
         id: control
+
+        onParserFnished: {
+            changeScreenVisible(resultCodeScreen)
+        }
     }
 
     Row {
@@ -89,9 +102,11 @@ ApplicationWindow {
             }
 
             InputCodeScreen {
+                id: inputCodeScreen
                 width: parent.width
                 height: parent.height - header.height
                 color: root.color
+                visible: true
 
                 onConfirmText: function (text) {
                     control.makeParser(text)
@@ -101,6 +116,19 @@ ApplicationWindow {
                     messagePopup.title = title
                     messagePopup.description = description
                     messagePopup.open()
+                }
+            }
+
+            ResultCodeScreen {
+                id: resultCodeScreen
+                width: parent.width
+                height: parent.height - header.height
+                color: root.color
+                visible: false
+                parserController: control
+
+                onGoBack: {
+                    changeScreenVisible(inputCodeScreen)
                 }
             }
         }
