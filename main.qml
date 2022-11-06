@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import QtQuick.Window 2.0
 
 import "./components/header"
 import "./components/inputcode"
@@ -12,8 +13,8 @@ import br.com.ParserController 1.0
 
 ApplicationWindow {
     id: root
-    width: 1300
-    height: 800
+    width: Screen.desktopAvailableWidth / 1.6
+    height: Screen.desktopAvailableHeight / 1.4
     visible: true
     title: qsTr("Parser")
     flags: Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.Window
