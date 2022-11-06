@@ -1,6 +1,7 @@
 #ifndef VARIABLEMANAGER_H
 #define VARIABLEMANAGER_H
 
+#include <QMap>
 #include <model/variable/variablemodel.h>
 
 class VariableManager {
