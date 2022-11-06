@@ -3,6 +3,8 @@
 
 #include <QList>
 
+#include <model/tipooperacaoassemblyenum.h>
+
 class UlaModel {
 public:
     UlaModel();
@@ -15,7 +17,11 @@ public:
     const QString& memoryAddress() const;
     void setMemoryAddress( const QString& newMemoryAddress );
 
+    TipoOperacaoAssemblyEnum tpOperacao() const;
+    void setTpOperacao( TipoOperacaoAssemblyEnum newTpOperacao );
+
 private:
+    TipoOperacaoAssemblyEnum _tpOperacao;
     QString _memoryAddress;
     QString _result;
     QList<QString> _values;

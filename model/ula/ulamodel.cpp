@@ -25,3 +25,11 @@ const QString& UlaModel::memoryAddress() const {
 void UlaModel::setMemoryAddress( const QString& newMemoryAddress ) {
     _memoryAddress = newMemoryAddress;
 }
+
+TipoOperacaoAssemblyEnum UlaModel::tpOperacao() const {
+    return _tpOperacao;
+}
+
+void UlaModel::setTpOperacao( TipoOperacaoAssemblyEnum newTpOperacao ){
+    _tpOperacao = newTpOperacao;
+}

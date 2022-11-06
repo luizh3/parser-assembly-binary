@@ -1,7 +1,7 @@
 #include "registermanager.h"
 
 RegisterManager::RegisterManager() :
-    _registersAlloc( { "RA", "RB", "RC", "RD", "RE", "RJ" } ) {
+    _registersAlloc( { "RA", "RB", "RC", "RD", "RE", "RJ", "RH", "RI","RO","RP" } ) {
     init();
 }
 

@@ -35,6 +35,7 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
     ulaModel->setMemoryAddress( binary->addressMemoryValues() );
     ulaModel->setResult( resultOperation );
     ulaModel->setValues( values );
+    ulaModel->setTpOperacao( tpOperacao );
 
     return ulaModel;
 }

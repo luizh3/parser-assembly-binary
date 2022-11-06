@@ -9,6 +9,7 @@ enum class TipoOperacaoAssemblyEnum {
     STORE,
     MOV,
     JUMP,
+    LABEL,
     BEQ,
     BGE,
     BGT,

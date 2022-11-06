@@ -3,9 +3,14 @@
 
 #include <QString>
 
+#include <model/variable/conditionmodel.h>
+
 class VariableService {
 public:
-    void fromTextToVariables( QString text ) const;
+    QMap<QString,VariableModel*> fromTextToVariables( QString text, const bool isLabel = false ) const;
+private:
+    ConditionModel* onIf( QString& text ) const;
+    QMap<QString,VariableModel*> rowValuesToVariable( QList<QString>& valuesRow, const bool isLabel ) const;
 };
 
 #endif // VARIABLESERVICE_H

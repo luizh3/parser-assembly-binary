@@ -30,7 +30,7 @@ ParserResultModel* ParserService::makeParser( QString dsText ) const {
 
     QList<UlaModel*> operationsUla = {};
     QList<BinaryRowModel*> binaryRows = {};
-    QList<AssemblyRowModel*> assemblyRows = AssemblyService().fromVariablesToAssemblyRow();
+    QList<AssemblyRowModel*> assemblyRows = AssemblyService().fromVariablesToAssemblyRow( VariableManager::instance().getAllKeys() );
 
     for( AssemblyRowModel* assemblyRow : qAsConst( assemblyRows ) ){
 
@@ -106,7 +106,16 @@ QString ParserService::operationsUlaToRawText( const QList<UlaModel*>& operation
     QString rawText = "";
 
     rawText = std::accumulate( operationsUla.cbegin(), operationsUla.cend(), rawText, []( QString dsText, const UlaModel* row ){
-        dsText.append( QString("%0 %1 %2 %3").arg( row->memoryAddress(), row->values().join(" "), row->result().rightJustified( 10, '0' ) , "\n" ) );
+
+        switch( row->tpOperacao() ){
+            case TipoOperacaoAssemblyEnum::LOAD:
+                dsText.append( QString("%0 %1 %2").arg( row->memoryAddress(), row->values().join(" "), "\n" ) );
+                break;
+            default:
+                dsText.append( QString("%0 %1 %2 %3").arg( row->memoryAddress(), row->values().join(" "), row->result().rightJustified( 10, '0' ) , "\n" ) );
+                break;
+        }
+
         return dsText;
     });
 

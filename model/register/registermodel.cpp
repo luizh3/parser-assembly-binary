@@ -4,7 +4,7 @@ RegisterModel::RegisterModel( const QString& name ) :
     _fgActive( false ),
     _nameRegister( name ){}
 
-const QString &RegisterModel::nameRegister() const {
+const QString& RegisterModel::nameRegister() const {
     return _nameRegister;
 }
 

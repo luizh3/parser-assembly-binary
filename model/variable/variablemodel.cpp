@@ -5,6 +5,7 @@
 VariableModel::VariableModel() :
     _register( nullptr ),
     _value( 0 ),
+    _isLabel( false ),
     _type( "" ),
     _params( {} ){}
 
@@ -32,8 +33,36 @@ TipoOperacaoAssemblyEnum VariableModel::tpOperation() const {
         return TipoOperacaoAssemblyEnum::SUB;
     }
 
+    if( _params.contains("==") ){
+        return TipoOperacaoAssemblyEnum::BEQ;
+    }
+
+    if( _params.contains(">=") ){
+        return TipoOperacaoAssemblyEnum::BGE;
+    }
+
+    if( _params.contains("<=") ){
+        return TipoOperacaoAssemblyEnum::BLE;
+    }
+
+    if( _params.contains(">") ){
+        return TipoOperacaoAssemblyEnum::BGT;
+    }
+
+    if( _params.contains("<") ){
+        return TipoOperacaoAssemblyEnum::BLT;
+    }
+
+    if( _params.contains("!=") ){
+        return TipoOperacaoAssemblyEnum::BNE;
+    }
+
     return TipoOperacaoAssemblyEnum::LOAD;
 
+}
+
+void VariableModel::addParam(const QList<QString> &params) {
+    _params.append( params );
 }
 
 void VariableModel::addParam( const QString &param ) {
@@ -62,4 +91,14 @@ RegisterModel* VariableModel::getRegister() const {
 
 void VariableModel::setRegister( RegisterModel* newRegister ){
     _register = newRegister;
+}
+
+bool VariableModel::isLabel() const
+{
+    return _isLabel;
+}
+
+void VariableModel::setIsLabel(bool newIsLabel)
+{
+    _isLabel = newIsLabel;
 }

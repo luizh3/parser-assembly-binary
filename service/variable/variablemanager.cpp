@@ -12,7 +12,7 @@ VariableManager &VariableManager::instance() {
     return mariableManager;
 }
 
-VariableModel *VariableManager::get( const QString &name ) const {
+VariableModel* VariableManager::get( const QString &name ) const {
     return _variables.value( name, nullptr );
 }
 
@@ -20,7 +20,7 @@ VariableModel *VariableManager::getByRegisterName( const QString &name ) const {
     return variableByRegister().value( name, nullptr );
 }
 
-void VariableManager::add( const QString &name, VariableModel *variable ) {
+void VariableManager::add( const QString &name, VariableModel* variable ) {
     _nameVariablesOrder.append( name );
     _variables.insert( name, variable );
 }

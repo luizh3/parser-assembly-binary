@@ -14,6 +14,7 @@ public:
     QList<QString> paramsWithoutOperators() const;
     TipoOperacaoAssemblyEnum tpOperation() const;
 
+    void addParam( const QList<QString>& params );
     void addParam( const QString& param );
 
     int value() const;
@@ -25,9 +26,13 @@ public:
     RegisterModel* getRegister() const;
     void setRegister(RegisterModel *newRegister);
 
+    bool isLabel() const;
+    void setIsLabel(bool newIsLabel);
+
 private:
     RegisterModel* _register;
     int _value;
+    bool _isLabel;
     QString _type;
     QList<QString> _params;
 };

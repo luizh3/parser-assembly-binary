@@ -18,6 +18,7 @@ SOURCES += \
         model/result/parserresultmodel.cpp \
         model/resultmodel.cpp \
         model/ula/ulamodel.cpp \
+        model/variable/conditionmodel.cpp \
         model/variable/variablemodel.cpp \
         service/assembly/assemblyservice.cpp \
         service/binary/binaryservice.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     model/resultmodel.h \
     model/tipooperacaoassemblyenum.h \
     model/ula/ulamodel.h \
+    model/variable/conditionmodel.h \
     model/variable/variablemodel.h \
     service/assembly/assemblyservice.h \
     service/binary/binaryservice.h \

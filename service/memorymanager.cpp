@@ -1,5 +1,7 @@
 #include "memorymanager.h"
 
+#include <service/binary/binaryservice.h>
+
 namespace {
 constexpr const int SIZE_MEMORY = 4;
 constexpr const int MAX_LENGTH_MEMORY = 5;
@@ -7,7 +9,7 @@ constexpr const int MAX_LENGTH_MEMORY_DATA = 10;
 }
 
 MemoryManager::MemoryManager() :
-    _currentAddress("0"),
+    _currentMemoryAssembly("0"),
     _valuesByAddress( {} ){}
 
 MemoryManager &MemoryManager::instance() {
@@ -16,9 +18,9 @@ MemoryManager &MemoryManager::instance() {
 }
 
 QString MemoryManager::alloc() {
-    const int nrAddressMemory = _currentAddress.toInt() + SIZE_MEMORY;
-    _currentAddress = QString::number( nrAddressMemory );
-    return _currentAddress.rightJustified( MAX_LENGTH_MEMORY, '0' );
+    const int nrAddressMemory = _currentMemoryAssembly.toInt() + SIZE_MEMORY;
+    _currentMemoryAssembly = QString::number( nrAddressMemory );
+    return _currentMemoryAssembly.rightJustified( MAX_LENGTH_MEMORY, '0' );
 }
 
 QString MemoryManager::allocValues( const QList<QString>& values) {
@@ -29,18 +31,23 @@ QString MemoryManager::allocValues( const QList<QString>& values) {
         valuesAlloc.append( currentValue.rightJustified( MAX_LENGTH_MEMORY_DATA, '0' ) );
     }
 
-    const QString address = alloc();
+    const QString address = allocBinaryMemory();
 
     _valuesByAddress.insert( address, valuesAlloc );
 
     return address;
 }
 
-QString MemoryManager::getValuesByAddressMemory( const QString &address ) const {
+QString MemoryManager::getValuesByAddressMemory( const QString& address ) const {
     return _valuesByAddress.value( address, "" );
 }
 
 void MemoryManager::reset() {
-    _currentAddress = "0";
+    _currentMemoryAssembly = "0";
     _valuesByAddress.clear();
+}
+
+QString MemoryManager::allocBinaryMemory(){
+    _currentMemoryBinary++;
+    return BinaryService().toBinary( _currentMemoryBinary ).rightJustified( 5, '0' );
 }
