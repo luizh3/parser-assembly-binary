@@ -16,6 +16,8 @@ private:
 
     QString sum( const QString& first, const QString& second ) const;
     QString sub( const QString& first, const QString& second ) const;
+    QString bge( const QString& first, const QString& second ) const;
+    QString ble( const QString& first, const QString& second ) const;
 };
 
 #endif // ULASERVICE_H
