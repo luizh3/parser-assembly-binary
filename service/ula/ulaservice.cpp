@@ -25,6 +25,12 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
         case TipoOperacaoAssemblyEnum::SUB:
             resultOperation = sub( values.first(), values.last() );
             break;
+        case TipoOperacaoAssemblyEnum::BGE:
+            resultOperation = bge( values.first(), values.last() );
+            break;
+        case TipoOperacaoAssemblyEnum::BLE:
+            resultOperation = ble( values.first(), values.last() );
+            break;
         case TipoOperacaoAssemblyEnum::LOAD:
             break;
         default:
@@ -59,6 +65,8 @@ TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpco
         { "00001", TipoOperacaoAssemblyEnum::LOAD },
         { "00010", TipoOperacaoAssemblyEnum::ADD },
         { "00011", TipoOperacaoAssemblyEnum::SUB },
+        { "00100", TipoOperacaoAssemblyEnum::BGE },
+        { "00101", TipoOperacaoAssemblyEnum::BLE },
     };
 
     return dsOperacaoByTp.value( dsUpcode, TipoOperacaoAssemblyEnum::UNDEFINED );
@@ -98,4 +106,15 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
 
     return "0";
 
+}
+
+QString UlaService::bge(const QString &first, const QString &second) const {
+
+    qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
+
+    return first.toInt() >= second.toInt() ? "1" : "0";
+}
+
+QString UlaService::ble(const QString &first, const QString &second) const {
+    return first.toInt() <= second.toInt() ? "1" : "0";
 }
