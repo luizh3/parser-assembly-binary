@@ -5,7 +5,17 @@ enum class TipoOperacaoAssemblyEnum {
     UNDEFINED,
     SUB,
     ADD,
-    LOAD
+    LOAD,
+    STORE,
+    MOV,
+    JUMP,
+    BEQ,
+    BGE,
+    BGT,
+    BLE,
+    BLT,
+    BNE,
+    BR
 };
 
 #endif // TIPOOPERACAOASSEMBLYENUM_H
