@@ -98,3 +98,8 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
     return "0";
 
 }
+
+QString UlaService::bge(const QString &first, const QString &second) const
+{
+
+}
