@@ -64,8 +64,8 @@ ApplicationWindow {
 
     SettingsScreen {
         id: settingsScreen
-        width: 500
-        height: 600
+        width: root.width / 2.8
+        height: root.height / 1.4
         anchors.centerIn: parent
     }
 
