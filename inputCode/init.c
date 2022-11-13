@@ -6,13 +6,13 @@ int main () {
     int second = 2 ;
 
     int result = first + second;
-
-    int more = result + 2;
-   
-    if( first >= second ){
-       int a = 5;
+ 
+    if( result >= 2 ){
+       result = 10;
     } else {
-       int h = 10;
+       result = 15;
     }
+
+    int h = 1 + result;
 
 }

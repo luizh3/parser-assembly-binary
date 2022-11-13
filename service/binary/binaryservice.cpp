@@ -2,12 +2,17 @@
 
 #include <service/memorymanager.h>
 #include <service/variable/variablemanager.h>
+#include <service/label/labelmanager.h>
 
 namespace {
     constexpr const int NR_SIZE_INT = 10;
 }
 
 BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* assemblyRow ) const {
+
+    if( LabelManager::instance().isLabelSkip() ){
+        return nullptr;
+    }
 
     VariableManager* variableManager = &VariableManager::instance();
 
@@ -42,9 +47,14 @@ BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* ass
 QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOperacao ) const {
 
     const QMap<TipoOperacaoAssemblyEnum, QString> dsOperacaoByTp = {
-        { TipoOperacaoAssemblyEnum::LOAD, "00001" },
+        { TipoOperacaoAssemblyEnum::LOAD,"00001" },
         { TipoOperacaoAssemblyEnum::ADD, "00010" },
         { TipoOperacaoAssemblyEnum::SUB, "00011" },
+        { TipoOperacaoAssemblyEnum::BGE, "00100" },
+        { TipoOperacaoAssemblyEnum::BLE, "00101" },
+        { TipoOperacaoAssemblyEnum::JUMP,"00110" },
+        { TipoOperacaoAssemblyEnum::LABEL,"00111" },
+        { TipoOperacaoAssemblyEnum::MOV, "01000"}
     };
 
     return dsOperacaoByTp.value( tpOperacao, "" );

@@ -26,8 +26,12 @@ public:
     VariableModel *variableResultOperation() const;
     void setVariableResultOperation( VariableModel *newVariableResultOperation );
 
+    bool isSkip() const;
+    void setIsSkip(bool newIsSkip);
+
 private:
     VariableModel* _variableResultOperation;
+    bool _isSkip;
     TipoOperacaoAssemblyEnum _typeOperation;
     QString _rawTextRow;
     QString _addressMemoryRow;

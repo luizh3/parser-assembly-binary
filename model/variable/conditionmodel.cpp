@@ -2,7 +2,11 @@
 
 ConditionModel::ConditionModel() { }
 
-const QString &ConditionModel::rawElseContent() const {
+VariableModel::TypeVariableEnum ConditionModel::tpVariable() {
+    return TypeVariableEnum::CONDITION;
+}
+
+const QString& ConditionModel::rawElseContent() const {
     return _rawElseContent;
 }
 

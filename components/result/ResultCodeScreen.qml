@@ -23,26 +23,26 @@ Rectangle {
 
     onVisibleChanged: function () {
         if (resultCodeScreen.visible) {
-            updateResultCodeByIdOptions(1)
+            updateResultCodeByIdOptions(inputTextArea, 1)
             buttonGroupSelect.setCheckedButton(1)
+            columnSecondTextArea.visible = false
         }
     }
 
-    function updateResultCodeByIdOptions(idOption) {
+    function updateResultCodeByIdOptions(componentUpdate, idOption) {
 
-        // TODO criar enum
         switch (idOption) {
         case ResultCodeScreen.TypeResultEnum.C:
-            inputTextArea.text = parserController.dsCodeInputC
+            componentUpdate.text = parserController.dsCodeInputC
             break
         case ResultCodeScreen.TypeResultEnum.ASSEMBLY:
-            inputTextArea.text = parserController.dsCodeResultAssembly
+            componentUpdate.text = parserController.dsCodeResultAssembly
             break
         case ResultCodeScreen.TypeResultEnum.BINARY:
-            inputTextArea.text = parserController.dsCodeResultBinary
+            componentUpdate.text = parserController.dsCodeResultBinary
             break
         case ResultCodeScreen.TypeResultEnum.ULA:
-            inputTextArea.text = parserController.dsCodeResultUla
+            componentUpdate.text = parserController.dsCodeResultUla
             break
         default:
             break
@@ -102,36 +102,81 @@ Rectangle {
             color: "#fff"
         }
 
-        Column {
+        Row {
             id: columnResult
             width: parent.width
             height: parent.height - buttonComeBack.height - textDescription.height
+            spacing: 10
 
-            ButtonGroupSelect {
-                id: buttonGroupSelect
-                width: 300
-                height: 40
-                options: optionsGroupSelect
+            Column {
+                width: inputTextAreaSecond.visible ? parent.width / 2 : parent.width
+                height: parent.height
 
-                onOptionSelected: function (idOption) {
-                    updateResultCodeByIdOptions(idOption)
+                ButtonGroupSelect {
+                    id: buttonGroupSelect
+                    width: 300
+                    height: 40
+                    options: optionsGroupSelect
+
+                    onOptionSelected: function (idOption) {
+                        updateResultCodeByIdOptions(inputTextArea, idOption)
+                    }
+
+                    onLeftButtonClicked: function (idOption) {
+                        columnSecondTextArea.visible = true
+                        updateResultCodeByIdOptions(inputTextAreaSecond,
+                                                    idOption)
+                    }
+                }
+
+                TextArea {
+                    id: inputTextArea
+                    width: parent.width
+                    height: parent.height - buttonGroupSelect.height
+                    color: "#f5f5f5"
+                    font.family: "Arial Black"
+                    font.pixelSize: 14
+                    wrapMode: "WordWrap"
+                    enabled: false
+                    padding: 15
+
+                    background: Rectangle {
+                        color: "#323232"
+                        radius: 2
+                    }
                 }
             }
 
-            TextArea {
-                id: inputTextArea
-                width: parent.width
-                height: parent.height - buttonGroupSelect.height
-                color: "#f5f5f5"
-                font.family: "Arial Black"
-                font.pixelSize: 14
-                wrapMode: "WordWrap"
-                enabled: false
-                padding: 15
+            Column {
+                id: columnSecondTextArea
+                width: columnResult.width / 2
+                height: parent.height
+                visible: false
 
-                background: Rectangle {
-                    color: "#323232"
-                    radius: 2
+                ButtonSelect {
+                    id: buttonSelectSecond
+                    width: 100
+                    height: 40
+                    text: "Assembly"
+                    checked: false
+                    visible: true
+                }
+
+                TextArea {
+                    id: inputTextAreaSecond
+                    width: parent.width
+                    height: parent.height - buttonSelectSecond.height
+                    color: "#f5f5f5"
+                    font.family: "Arial Black"
+                    font.pixelSize: 14
+                    wrapMode: "WordWrap"
+                    enabled: false
+                    padding: 15
+
+                    background: Rectangle {
+                        color: "#323232"
+                        radius: 2
+                    }
                 }
             }
         }

@@ -38,6 +38,12 @@ void RegisterManager::reset() {
     init();
 }
 
+void RegisterManager::free( RegisterModel* registerFree ) {
+    RegisterModel* current = _registers.takeAt( _registers.indexOf( registerFree ) );
+    current->setFgActive( false );
+    _registers.prepend( current );
+}
+
 void RegisterManager::init() {
     for( const QString& registerName : qAsConst( _registersAlloc ) ){
         _registers.append( new RegisterModel( registerName ) );

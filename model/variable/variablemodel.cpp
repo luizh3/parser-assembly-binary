@@ -9,6 +9,17 @@ VariableModel::VariableModel() :
     _type( "" ),
     _params( {} ){}
 
+VariableModel::VariableModel( const VariableModel *variable ) :
+    _value( variable->value() ),
+    _isLabel( variable->isLabel() ),
+    _type( variable->type() ),
+    _params( variable->params() ){
+}
+
+VariableModel::TypeVariableEnum VariableModel::tpVariable() {
+    return TypeVariableEnum::VARIABLE;
+}
+
 QList<QString> VariableModel::paramsWithoutOperators() const {
 
     QList<QString> params = {};
@@ -23,7 +34,7 @@ QList<QString> VariableModel::paramsWithoutOperators() const {
 
 }
 
-TipoOperacaoAssemblyEnum VariableModel::tpOperation() const {
+TipoOperacaoAssemblyEnum VariableModel::tpOperation( const bool isAlreadyAllocated ) const {
 
     if( _params.contains("+") ){
         return TipoOperacaoAssemblyEnum::ADD;
@@ -57,6 +68,10 @@ TipoOperacaoAssemblyEnum VariableModel::tpOperation() const {
         return TipoOperacaoAssemblyEnum::BNE;
     }
 
+    if( _params.contains("=" ) && isAlreadyAllocated ){
+        return TipoOperacaoAssemblyEnum::MOV;
+    }
+
     return TipoOperacaoAssemblyEnum::LOAD;
 
 }
@@ -67,6 +82,14 @@ void VariableModel::addParam(const QList<QString> &params) {
 
 void VariableModel::addParam( const QString &param ) {
     _params.append( param );
+}
+
+QList<QString> VariableModel::params() const {
+    return _params;
+}
+
+void VariableModel::clearParams() {
+    _params.clear();
 }
 
 int VariableModel::value() const {
