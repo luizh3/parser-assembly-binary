@@ -18,6 +18,10 @@ private:
     QString sub( const QString& first, const QString& second ) const;
     QString bge( const QString& first, const QString& second ) const;
     QString ble( const QString& first, const QString& second ) const;
+    QString beq( const QString& first, const QString& second ) const;
+    QString bgt( const QString& first, const QString& second ) const;
+    QString blt( const QString& first, const QString& second ) const;
+    QString bne( const QString& first, const QString& second ) const;
 };
 
 #endif // ULASERVICE_H
