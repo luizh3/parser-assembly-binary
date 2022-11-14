@@ -15,7 +15,6 @@ BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* ass
     }
 
     VariableManager* variableManager = &VariableManager::instance();
-
     BinaryRowModel* binaryRow = new BinaryRowModel();
 
     QString rowBinary = "%0 %1";
@@ -52,7 +51,7 @@ QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOpe
         { TipoOperacaoAssemblyEnum::SUB, "00011" },
         { TipoOperacaoAssemblyEnum::BGE, "00100" },
         { TipoOperacaoAssemblyEnum::BLE, "00101" },
-        { TipoOperacaoAssemblyEnum::BEQ,"00110" },
+        { TipoOperacaoAssemblyEnum::BEQ, "00110" },
         { TipoOperacaoAssemblyEnum::BGT, "00111" },
         { TipoOperacaoAssemblyEnum::BLT, "01000" },
         { TipoOperacaoAssemblyEnum::BNE, "01001" },
