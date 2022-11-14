@@ -31,6 +31,18 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
         case TipoOperacaoAssemblyEnum::BLE:
             resultOperation = ble( values.first(), values.last() );
             break;
+    case TipoOperacaoAssemblyEnum::BEQ:
+        resultOperation = beq( values.first(), values.last() );
+        break;
+    case TipoOperacaoAssemblyEnum::BGT:
+        resultOperation = bgt( values.first(), values.last() );
+        break;
+    case TipoOperacaoAssemblyEnum::BLT:
+        resultOperation = blt( values.first(), values.last() );
+        break;
+    case TipoOperacaoAssemblyEnum::BNE:
+        resultOperation = bne( values.first(), values.last() );
+        break;
         case TipoOperacaoAssemblyEnum::LOAD:
             break;
         default:
@@ -67,6 +79,10 @@ TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpco
         { "00011", TipoOperacaoAssemblyEnum::SUB },
         { "00100", TipoOperacaoAssemblyEnum::BGE },
         { "00101", TipoOperacaoAssemblyEnum::BLE },
+        { "00110", TipoOperacaoAssemblyEnum::BEQ },
+        { "00111", TipoOperacaoAssemblyEnum::BGT },
+        { "01000", TipoOperacaoAssemblyEnum::BLT },
+        { "01001", TipoOperacaoAssemblyEnum::BNE },
     };
 
     return dsOperacaoByTp.value( dsUpcode, TipoOperacaoAssemblyEnum::UNDEFINED );
@@ -117,4 +133,20 @@ QString UlaService::bge(const QString &first, const QString &second) const {
 
 QString UlaService::ble(const QString &first, const QString &second) const {
     return first.toInt() <= second.toInt() ? "1" : "0";
+}
+
+QString UlaService::beq(const QString &first, const QString &second) const {
+    return first.toInt() == second.toInt() ? "1" : "0";
+}
+
+QString UlaService::bgt(const QString &first, const QString &second) const {
+    return first.toInt() > second.toInt() ? "1" : "0";
+}
+
+QString UlaService::blt(const QString &first, const QString &second) const {
+    return first.toInt() < second.toInt() ? "1" : "0";
+}
+
+QString UlaService::bne(const QString &first, const QString &second) const {
+    return first.toInt() != second.toInt() ? "1" : "0";
 }
