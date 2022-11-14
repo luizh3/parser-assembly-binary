@@ -52,9 +52,13 @@ QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOpe
         { TipoOperacaoAssemblyEnum::SUB, "00011" },
         { TipoOperacaoAssemblyEnum::BGE, "00100" },
         { TipoOperacaoAssemblyEnum::BLE, "00101" },
-        { TipoOperacaoAssemblyEnum::JUMP,"00110" },
-        { TipoOperacaoAssemblyEnum::LABEL,"00111" },
-        { TipoOperacaoAssemblyEnum::MOV, "01000"}
+        { TipoOperacaoAssemblyEnum::BEQ,"00110" },
+        { TipoOperacaoAssemblyEnum::BGT, "00111" },
+        { TipoOperacaoAssemblyEnum::BLT, "01000" },
+        { TipoOperacaoAssemblyEnum::BNE, "01001" },
+        { TipoOperacaoAssemblyEnum::JUMP, "01010" },
+        { TipoOperacaoAssemblyEnum::LABEL, "01011" },
+        { TipoOperacaoAssemblyEnum::MOV, "01100" },
     };
 
     return dsOperacaoByTp.value( tpOperacao, "" );

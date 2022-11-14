@@ -7,7 +7,7 @@ int main () {
 
     int result = first + second;
  
-    if( result >= 2 ){
+    if( result == 2 ){
        result = 10;
     } else {
        result = 15;

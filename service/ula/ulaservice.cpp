@@ -31,18 +31,18 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
         case TipoOperacaoAssemblyEnum::BLE:
             resultOperation = ble( values.first(), values.last() );
             break;
-    case TipoOperacaoAssemblyEnum::BEQ:
-        resultOperation = beq( values.first(), values.last() );
-        break;
-    case TipoOperacaoAssemblyEnum::BGT:
-        resultOperation = bgt( values.first(), values.last() );
-        break;
-    case TipoOperacaoAssemblyEnum::BLT:
-        resultOperation = blt( values.first(), values.last() );
-        break;
-    case TipoOperacaoAssemblyEnum::BNE:
-        resultOperation = bne( values.first(), values.last() );
-        break;
+        case TipoOperacaoAssemblyEnum::BEQ:
+            resultOperation = beq( values.first(), values.last() );
+            break;
+        case TipoOperacaoAssemblyEnum::BGT:
+            resultOperation = bgt( values.first(), values.last() );
+            break;
+        case TipoOperacaoAssemblyEnum::BLT:
+            resultOperation = blt( values.first(), values.last() );
+            break;
+        case TipoOperacaoAssemblyEnum::BNE:
+            resultOperation = bne( values.first(), values.last() );
+            break;
         case TipoOperacaoAssemblyEnum::LOAD:
             break;
         default:
@@ -83,6 +83,9 @@ TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpco
         { "00111", TipoOperacaoAssemblyEnum::BGT },
         { "01000", TipoOperacaoAssemblyEnum::BLT },
         { "01001", TipoOperacaoAssemblyEnum::BNE },
+        { "01010", TipoOperacaoAssemblyEnum::JUMP },
+        { "01011", TipoOperacaoAssemblyEnum::LABEL },
+        { "01100", TipoOperacaoAssemblyEnum::MOV },
     };
 
     return dsOperacaoByTp.value( dsUpcode, TipoOperacaoAssemblyEnum::UNDEFINED );
@@ -124,7 +127,7 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
 
 }
 
-QString UlaService::bge(const QString &first, const QString &second) const {
+QString UlaService::bge( const QString &first, const QString &second ) const {
 
     qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
 

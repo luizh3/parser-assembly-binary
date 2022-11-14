@@ -184,6 +184,11 @@ void ParserService::activeLabel( const bool result, const TipoOperacaoAssemblyEn
     LabelManager* label = &LabelManager::instance();
 
     switch( tpLastOperation ) {
+        case TipoOperacaoAssemblyEnum::BEQ:
+        case TipoOperacaoAssemblyEnum::BGT:
+        case TipoOperacaoAssemblyEnum::BLE:
+        case TipoOperacaoAssemblyEnum::BNE:
+        case TipoOperacaoAssemblyEnum::BLT:
         case TipoOperacaoAssemblyEnum::BGE:{
             bool isLabel = result;
 

@@ -36,6 +36,21 @@ QList<AssemblyRowModel*> AssemblyService::fromVariablesToAssemblyRow( const QLis
             case TipoOperacaoAssemblyEnum::BGE:
                 rowsAssembly.append( bge( current ) );
                 break;
+            case TipoOperacaoAssemblyEnum::BEQ:
+                rowsAssembly.append( beq( current ) );
+                break;
+            case TipoOperacaoAssemblyEnum::BGT:
+                rowsAssembly.append( bgt( current ) );
+                break;
+            case TipoOperacaoAssemblyEnum::BLT:
+                rowsAssembly.append( blt( current ) );
+                break;
+            case TipoOperacaoAssemblyEnum::BNE:
+                rowsAssembly.append( bne( current ) );
+                break;
+            case TipoOperacaoAssemblyEnum::BLE:
+                rowsAssembly.append( ble( current ) );
+                break;
             default:
                  break;
         }
@@ -99,18 +114,35 @@ AssemblyRowModel* AssemblyService::toAssemblyRowByType( const TipoOperacaoAssemb
     return nullptr;
 }
 
-QList<AssemblyRowModel*> AssemblyService::bge( VariableModel *variable ) const {
+AssemblyRowModel* AssemblyService::bge( const VariableModel* variable ) const {
+    return toConditionAssemblyRow( QString( "BGE %1, %2" ), variable );
+}
 
-    QList<AssemblyRowModel*> rowsResult = {};
+AssemblyRowModel *AssemblyService::beq( const VariableModel* variable) const {
+    return toConditionAssemblyRow( QString( "BEQ %1, %2" ), variable );
+}
 
-   ConditionModel* condition = static_cast<ConditionModel*>( variable );
+AssemblyRowModel *AssemblyService::bgt( const VariableModel* variable) const {
+    return toConditionAssemblyRow( QString( "BGT %1, %2" ), variable );
+}
 
+AssemblyRowModel *AssemblyService::blt( const VariableModel* variable) const {
+    return toConditionAssemblyRow( QString( "BLT %1, %2" ), variable );
+}
+
+AssemblyRowModel *AssemblyService::bne( const VariableModel* variable) const {
+    return toConditionAssemblyRow( QString( "BNE %1, %2" ), variable );
+}
+
+AssemblyRowModel *AssemblyService::ble( const VariableModel* variable) const{
+    return toConditionAssemblyRow( QString( "BLE %1, %2" ), variable );
+}
+
+AssemblyRowModel* AssemblyService::toConditionAssemblyRow( const QString& dsRow, const VariableModel *variable ) const {
+   const ConditionModel* condition = static_cast<const ConditionModel*>( variable );
    const QList<QString> params = toAsmInstruction( condition->paramsWithoutOperators() );
-
-   const QString rowBge = QString( "%0 %1, %2" ).arg( "BGE", params.first(), params.last() );
-   rowsResult.append( toAssemblyRow( rowBge, params, condition->tpOperation() ) );
-
-   return rowsResult;
+   const QString dsRowAssembly = QString( dsRow ).arg( params.first(), params.last() );
+   return toAssemblyRow( dsRowAssembly, params, condition->tpOperation() );
 }
 
 AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
