@@ -7,6 +7,8 @@ class ConditionModel : public VariableModel {
 public:
     ConditionModel();
 
+    TypeVariableEnum tpVariable() override;
+
     const QString &rawElseContent() const;
     void setRawElseContent(const QString &newRawElseContent);
 

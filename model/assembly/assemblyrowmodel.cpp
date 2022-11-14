@@ -48,3 +48,11 @@ void AssemblyRowModel::setVariableResultOperation( VariableModel* newVariableRes
     _variableResultOperation = newVariableResultOperation;
 }
 
+bool AssemblyRowModel::isSkip() const {
+    return _isSkip;
+}
+
+void AssemblyRowModel::setIsSkip( bool newIsSkip ) {
+    _isSkip = newIsSkip;
+}
+

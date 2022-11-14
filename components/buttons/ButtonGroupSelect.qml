@@ -7,6 +7,7 @@ Rectangle {
     property var options: []
 
     signal optionSelected(var idOption)
+    signal leftButtonClicked(var idOption)
 
     function setCheckedButton(idButton) {
 
@@ -36,7 +37,11 @@ Rectangle {
                 text: dsButton
                 checked: isChecked
 
-                onClicked: {
+                onLeftButtonClicked: function (idOption) {
+                    buttonGroupSelect.leftButtonClicked(idElement)
+                }
+
+                onClicked: function (mouse) {
                     setCheckedButton(idElement)
                     buttonGroupSelect.optionSelected(idElement)
                 }

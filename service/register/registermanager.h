@@ -17,6 +17,7 @@ public:
     bool hasRegisterByName( const QString& name ) const;
 
     void reset();
+    void free( RegisterModel* registerFree );
 
 private:
     void init();

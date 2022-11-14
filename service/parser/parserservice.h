@@ -19,6 +19,10 @@ private:
     QString binaryRowToRawText(  const QList<BinaryRowModel*>& rows ) const;
     QString operationsUlaToRawText(  const QList<UlaModel*>& operationsUla ) const;
 
+    void toObjectsFromText( QString& dsText, QList<AssemblyRowModel*>& rowsAssembly, QList<BinaryRowModel*>& rowsBinary, QList<UlaModel*>& operationsUla ) const;
+
+    void activeLabel( const bool result, const TipoOperacaoAssemblyEnum& tpLastOperation ) const;
+
 };
 
 #endif // PARSERSERVICE_H

@@ -5,6 +5,7 @@
 #include <service/memorymanager.h>
 #include <service/ula/ulaservice.h>
 #include <service/binary/binaryservice.h>
+#include <service/label/labelmanager.h>
 #include <service/register/registermanager.h>
 #include <service/assembly/assemblyservice.h>
 #include <service/variable/variableservice.h>
@@ -25,30 +26,11 @@ ParserResultModel* ParserService::makeParser( QString dsText ) const {
     //TODO review all code for put log in any method
 
     formatText( dsText );
-
-    VariableService().fromTextToVariables( dsText );
-
     QList<UlaModel*> operationsUla = {};
+    QList<AssemblyRowModel*> assemblyRows = {};
     QList<BinaryRowModel*> binaryRows = {};
-    QList<AssemblyRowModel*> assemblyRows = AssemblyService().fromVariablesToAssemblyRow( VariableManager::instance().getAllKeys() );
 
-    for( AssemblyRowModel* assemblyRow : qAsConst( assemblyRows ) ){
-
-       BinaryRowModel* binaryRow = BinaryService().fromAssemblyToBinary( assemblyRow );
-
-       UlaModel* ulaModel = UlaService().process( binaryRow );
-       operationsUla.append( ulaModel );
-
-       // TODO maybe to do a method that validated if is expected a result by type operation
-       if( assemblyRow->variableResultOperation() ){
-           assemblyRow->variableResultOperation()->setValue( BinaryService().fromBinary( ulaModel->result() ) );
-       }
-
-       binaryRow->setResultValue( ulaModel->result() );
-
-       binaryRows.append( binaryRow );
-
-    }
+    toObjectsFromText( dsText, assemblyRows, binaryRows, operationsUla );
 
     ParserResultModel* parserResult = toParserResult( assemblyRows, binaryRows, operationsUla );
 
@@ -121,4 +103,97 @@ QString ParserService::operationsUlaToRawText( const QList<UlaModel*>& operation
 
     return rawText;
 
+}
+
+void ParserService::toObjectsFromText( QString& dsText, QList<AssemblyRowModel*>& rowsAssembly, QList<BinaryRowModel*>& rowsBinary, QList<UlaModel*>& operationsUla ) const {
+
+    while( !dsText.isEmpty() ) {
+
+        QMap<QString, VariableModel*> variables = VariableService().fromTextToVariables( dsText );
+
+        const QList<AssemblyRowModel*> assemblyResultRows = AssemblyService().fromVariablesToAssemblyRow( variables.keys() );
+        rowsAssembly.append( assemblyResultRows );
+
+        for( const AssemblyRowModel* currentRow : qAsConst( assemblyResultRows ) ){
+
+            BinaryRowModel* binaryRow = BinaryService().fromAssemblyToBinary( currentRow );
+
+            if( !binaryRow ){
+                continue;
+            }
+
+            rowsBinary.append( binaryRow );
+
+            UlaModel* ulaModel = UlaService().process( binaryRow );
+            operationsUla.append( ulaModel );
+
+            activeLabel( !ulaModel->result().toInt(), ulaModel->tpOperacao() );
+
+            // TODO maybe to do a method that validated if is expected a result by type operation
+            if( currentRow->variableResultOperation() ){
+              currentRow->variableResultOperation()->setValue( BinaryService().fromBinary( ulaModel->result() ) );
+            }
+
+            binaryRow->setResultValue( ulaModel->result() );
+
+        }
+
+        // TODO this is a jerry-rigged, no time now
+        QList<QString> nameVariables = variables.keys();
+
+        for( const QString& key : qAsConst( nameVariables ) ){
+
+            VariableModel* variable = variables.value( key );
+
+            if( variable->tpVariable() == VariableModel::TypeVariableEnum::CONDITION ){
+
+                ConditionModel* condition = static_cast<ConditionModel*>( variable );
+
+                QString rawIfContent = condition->rawIfContent();
+                QString rawElseContent = condition->rawElseContent();
+
+                LabelManager* label = &LabelManager::instance();
+
+                QString firstLabel = label->getDsNextLabel();
+                QString secondLabel = label->getDsNextLabel();
+
+                // TODO change how this is make
+
+                rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::JUMP, { firstLabel } ) );
+                toObjectsFromText( rawIfContent, rowsAssembly, rowsBinary, operationsUla );
+                rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::JUMP, { secondLabel } ) );
+
+                label->setTpLabelJump( label->hasLabelActive() ? LabelManager::TypeLabelJumpEnum::NONE : LabelManager::TypeLabelJumpEnum::JUMP );
+
+                rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::LABEL, { firstLabel } ) );
+                toObjectsFromText( rawElseContent, rowsAssembly, rowsBinary, operationsUla );
+
+                label->setTpLabelJump( LabelManager::TypeLabelJumpEnum::NONE );
+                rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::LABEL, { secondLabel } ) );
+
+            }
+
+        }
+
+    }
+
+}
+
+void ParserService::activeLabel( const bool result, const TipoOperacaoAssemblyEnum& tpLastOperation  ) const {
+
+    LabelManager* label = &LabelManager::instance();
+
+    switch( tpLastOperation ) {
+        case TipoOperacaoAssemblyEnum::BGE:{
+            bool isLabel = result;
+
+            if( isLabel ){
+                label->setTpLabelJump( LabelManager::TypeLabelJumpEnum::CONDICIONAL );
+            }
+
+            break;
+        }
+        default:
+            break;
+    }
 }

@@ -8,6 +8,7 @@ Rectangle {
 
     property bool checked: false
 
+    signal leftButtonClicked
     signal clicked
 
     property string colorChecked: "#323232"
@@ -15,7 +16,7 @@ Rectangle {
 
     property alias text: description.text
 
-    color: isChecked ? colorChecked : (mouseArea.containsMouse ? "#939596" : colorDefault)
+    color: checked ? colorChecked : (mouseArea.containsMouse ? "#939596" : colorDefault)
 
     //    Rectangle {
     //        width: parent.width
@@ -36,8 +37,16 @@ Rectangle {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
+        propagateComposedEvents: true
+        acceptedButtons: Qt.RightButton | Qt.LeftButton
 
         onClicked: {
+
+            if (mouse.button === Qt.RightButton) {
+                buttonSelect.leftButtonClicked()
+                return
+            }
+
             buttonSelect.clicked()
         }
     }

@@ -4,35 +4,27 @@
 
 #include "variablemanager.h"
 
-QMap<QString,VariableModel*> VariableService::fromTextToVariables( QString text, const bool isLabel ) const {
+QMap<QString,VariableModel*> VariableService::fromTextToVariables( QString& text, const bool isLabel ) const {
 
-    QMap<QString,VariableModel*> variables = {};
-
-    while( !text.isEmpty() ){
-
-        QString currentText = text.left( text.indexOf(";") );
+    QString currentText = text.left( text.indexOf(";") );
 
         if( currentText.contains( "if" ) ){
             ConditionModel* condition = onIf( text );
 
-            condition->setVariablesElseContent( fromTextToVariables( condition->rawElseContent(), true ) );
-            condition->setVariablesIfContent( fromTextToVariables( condition->rawIfContent(), true ) );
+//            condition->setVariablesElseContent( fromTextToVariables( condition->rawElseContent(), true ) );
+//            condition->setVariablesIfContent( fromTextToVariables( condition->rawIfContent(), true ) );
 
             VariableManager::instance().add( "CONDITION", condition );
 
-            continue;
+            return { { "CONDITION", condition } };
         }
 
-        text.remove( 0, currentText.size() + 1 );
-        currentText = currentText.trimmed();
+    text.remove( 0, currentText.size() + 1 );
+    currentText = currentText.trimmed();
 
-        QList<QString> valuesRow = currentText.split( ' ' );
+    QList<QString> valuesRow = currentText.split( ' ' );
 
-        variables.unite( rowValuesToVariable( valuesRow, isLabel ) );
-
-    }
-
-    return variables;
+    return rowValuesToVariable( valuesRow, isLabel );
 }
 
 ConditionModel* VariableService::onIf( QString& text ) const {
@@ -99,7 +91,15 @@ QMap<QString,VariableModel*> VariableService::rowValuesToVariable( QList<QString
 
         if( InstructionHelper::regexNameVariable().match( currentValue ).hasMatch() ){
 
-            if( variableManager->getAllKeys().contains( currentValue ) ){
+            if( hasVariable( currentValue ) && variable->type().trimmed().isEmpty() ){
+                delete variable;
+                variable = variableManager->get( currentValue );
+                variable->clearParams();
+                variables.insert( currentValue, variable );
+                continue;
+            }
+
+            if( hasVariable( currentValue ) ){
                 variable->addParam( currentValue );
                 continue;
             }
@@ -113,4 +113,8 @@ QMap<QString,VariableModel*> VariableService::rowValuesToVariable( QList<QString
     }
 
     return variables;
+}
+
+bool VariableService::hasVariable( const QString& dsVariable ) const {
+    return VariableManager::instance().getAllKeys().contains( dsVariable );
 }
