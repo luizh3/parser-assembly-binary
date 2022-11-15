@@ -25,8 +25,19 @@ BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* ass
     for( const QString& currentValue : assemblyRow->values() ){
 
         if( variableManager->registersVariables().contains( currentValue ) ){
+
             const VariableModel* variable = variableManager->getByRegisterName( currentValue );
-            valuesStore.append( toBinary( variable->value() ) );
+
+            switch( assemblyRow->typeOperation() ){
+                case TipoOperacaoAssemblyEnum::LOAD:
+                case TipoOperacaoAssemblyEnum::MOV:
+                    valuesStore.prepend( variable->getRegister()->binaryMemory() );
+                    break;
+                default:
+                    valuesStore.append( toBinary( variable->value() ) );
+                    break;
+            }
+
             continue;
         }
 

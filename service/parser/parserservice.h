@@ -23,6 +23,8 @@ private:
 
     void activeLabel( const bool result, const TipoOperacaoAssemblyEnum& tpLastOperation ) const;
 
+    void reset() const;
+
 };
 
 #endif // PARSERSERVICE_H

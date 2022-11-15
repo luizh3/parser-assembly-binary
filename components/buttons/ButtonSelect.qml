@@ -10,6 +10,7 @@ Rectangle {
 
     signal leftButtonClicked
     signal clicked
+    signal closed
 
     property string colorChecked: "#323232"
     property string colorDefault: "#818385"
@@ -18,11 +19,6 @@ Rectangle {
 
     color: checked ? colorChecked : (mouseArea.containsMouse ? "#939596" : colorDefault)
 
-    //    Rectangle {
-    //        width: parent.width
-    //        height: 2
-    //        color: isChecked ? "#1f6ff2" : colorDefault
-    //    }
     Label {
         id: description
         font.pixelSize: 15

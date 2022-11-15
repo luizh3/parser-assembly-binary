@@ -17,9 +17,9 @@ public:
 
     void reset();
 
-private:
     QString allocBinaryMemory();
 
+private:
     int _currentMemoryBinary;
     QString _currentMemoryAssembly;
     QMap<QString, QString> _valuesByAddress;

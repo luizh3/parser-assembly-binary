@@ -1,5 +1,7 @@
 #include "registermanager.h"
 
+#include <service/memorymanager.h>
+
 RegisterManager::RegisterManager() :
     _registersAlloc( { "RA", "RB", "RC", "RD", "RE", "RJ", "RH", "RI","RO","RP" } ) {
     init();
@@ -46,6 +48,6 @@ void RegisterManager::free( RegisterModel* registerFree ) {
 
 void RegisterManager::init() {
     for( const QString& registerName : qAsConst( _registersAlloc ) ){
-        _registers.append( new RegisterModel( registerName ) );
+        _registers.append( new RegisterModel( registerName, MemoryManager::instance().allocBinaryMemory() ) );
     }
 }

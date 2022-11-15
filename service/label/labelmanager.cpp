@@ -38,3 +38,9 @@ LabelManager::TypeLabelJumpEnum LabelManager::tpLabelJump() const {
 void LabelManager::setTpLabelJump( TypeLabelJumpEnum newTpLabelJump ) {
     _tpLabelJump = newTpLabelJump;
 }
+
+void LabelManager::reset() {
+    _nrCurrentLabel = 0;
+    _tpLabelJump = TypeLabelJumpEnum::NONE;
+    _resultLastOperation = false;
+}

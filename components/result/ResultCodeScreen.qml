@@ -29,6 +29,38 @@ Rectangle {
         }
     }
 
+    function getOptionById(listOption, idOption) {
+
+        for (var i = 0; i < listOption.count; ++i) {
+            if (listOption.get(i).idElement === idOption) {
+                return listOption.get(i)
+            }
+        }
+
+        return null
+    }
+
+    function removeOptionById(listOption, idOption) {
+
+        for (var i = 0; i < listOption.count; ++i) {
+            if (listOption.get(i).idElement === idOption) {
+                listOption.remove(i, 1)
+                break
+            }
+        }
+    }
+
+    function hasOptionById(listOptions, idOption) {
+
+        for (var i = 0; i < listOptions.count; ++i) {
+            if (listOptions.get(i).idElement === idOption) {
+                return true
+            }
+        }
+
+        return false
+    }
+
     function updateResultCodeByIdOptions(componentUpdate, idOption) {
 
         switch (idOption) {
@@ -75,6 +107,10 @@ Rectangle {
             dsButton: "Ula"
             isChecked: false
         }
+    }
+
+    ListModel {
+        id: optionsGroupSelectSecond
     }
 
     Column {
@@ -124,6 +160,16 @@ Rectangle {
 
                     onLeftButtonClicked: function (idOption) {
                         columnSecondTextArea.visible = true
+
+                        var option = getOptionById(optionsGroupSelect, idOption)
+
+                        if (!hasOptionById(optionsGroupSelectSecond,
+                                           idOption)) {
+                            optionsGroupSelectSecond.append(option)
+                        }
+
+                        buttonGroupSelectSecond.setCheckedButton(idOption)
+
                         updateResultCodeByIdOptions(inputTextAreaSecond,
                                                     idOption)
                     }
@@ -153,19 +199,42 @@ Rectangle {
                 height: parent.height
                 visible: false
 
-                ButtonSelect {
-                    id: buttonSelectSecond
-                    width: 100
+                ButtonGroupSelect {
+                    id: buttonGroupSelectSecond
+                    width: 300
                     height: 40
-                    text: "Assembly"
-                    checked: false
-                    visible: true
+                    options: optionsGroupSelectSecond
+                    hasCloseActive: true
+
+                    onOptionSelected: function (idOption) {
+                        updateResultCodeByIdOptions(inputTextAreaSecond,
+                                                    idOption)
+                    }
+
+                    onClosed: function (idOption) {
+
+                        removeOptionById(optionsGroupSelectSecond, idOption)
+
+                        if (optionsGroupSelectSecond.count <= 0) {
+                            columnSecondTextArea.visible = false
+                            return
+                        }
+
+                        var idElementFirstOption = optionsGroupSelectSecond.get(
+                                    0).idElement
+
+                        updateResultCodeByIdOptions(inputTextAreaSecond,
+                                                    idElementFirstOption)
+
+                        buttonGroupSelectSecond.setCheckedButton(
+                                    idElementFirstOption)
+                    }
                 }
 
                 TextArea {
                     id: inputTextAreaSecond
                     width: parent.width
-                    height: parent.height - buttonSelectSecond.height
+                    height: parent.height - buttonGroupSelectSecond.height
                     color: "#f5f5f5"
                     font.family: "Arial Black"
                     font.pixelSize: 14
