@@ -4,6 +4,7 @@
 
 VariableModel::VariableModel() :
     _register( nullptr ),
+    _tpOperation( TipoOperacaoAssemblyEnum::UNDEFINED ),
     _value( 0 ),
     _isLabel( false ),
     _type( "" ),
@@ -35,6 +36,10 @@ QList<QString> VariableModel::paramsWithoutOperators() const {
 }
 
 TipoOperacaoAssemblyEnum VariableModel::tpOperation( const bool isAlreadyAllocated ) const {
+
+    if( _tpOperation != TipoOperacaoAssemblyEnum::UNDEFINED ){
+        return _tpOperation;
+    }
 
     if( _params.contains("+") ){
         return TipoOperacaoAssemblyEnum::ADD;
@@ -116,12 +121,14 @@ void VariableModel::setRegister( RegisterModel* newRegister ){
     _register = newRegister;
 }
 
-bool VariableModel::isLabel() const
-{
+bool VariableModel::isLabel() const {
     return _isLabel;
 }
 
-void VariableModel::setIsLabel(bool newIsLabel)
-{
+void VariableModel::setIsLabel( bool newIsLabel ) {
     _isLabel = newIsLabel;
+}
+
+void VariableModel::setTpOperation( const TipoOperacaoAssemblyEnum& tpOperation ) {
+    _tpOperation = tpOperation;
 }

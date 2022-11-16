@@ -44,6 +44,7 @@ QString MemoryManager::getValuesByAddressMemory( const QString& address ) const 
 
 void MemoryManager::reset() {
     _currentMemoryAssembly = "0";
+    _currentMemoryBinary = 0;
     _valuesByAddress.clear();
 }
 

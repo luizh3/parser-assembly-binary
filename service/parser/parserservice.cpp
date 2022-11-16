@@ -38,9 +38,7 @@ ParserResultModel* ParserService::makeParser( QString dsText ) const {
     qDeleteAll( binaryRows );
     qDeleteAll( assemblyRows );
 
-    VariableManager::instance().reset();
-    MemoryManager::instance().reset();
-    RegisterManager::instance().reset();
+    reset();
 
     return parserResult;
 
@@ -74,6 +72,8 @@ QString ParserService::binaryRowToRawText(const QList<BinaryRowModel*>& rows) co
 
     QString rawText = "";
 
+    rawText = QString("%0 %1 %2").arg( QString("CODE").leftJustified(5), QString("END").leftJustified(12), QString("\n\n"));
+
     rawText = std::accumulate( rows.cbegin(), rows.cend(), rawText, []( QString dsText, const BinaryRowModel* row ){
         dsText.append( QString("%0 %1").arg( row->rawRow(), "\n" ) );
         return dsText;
@@ -87,10 +87,13 @@ QString ParserService::operationsUlaToRawText( const QList<UlaModel*>& operation
 
     QString rawText = "";
 
+    rawText = QString("%0 %1 %2 %3 %4").arg( QString("END").leftJustified(5), QString("VALOR1").leftJustified(12), QString("VALOR2").leftJustified(12), QString("RESULTADO").leftJustified(10), QString("\n\n"));
+
     rawText = std::accumulate( operationsUla.cbegin(), operationsUla.cend(), rawText, []( QString dsText, const UlaModel* row ){
 
         switch( row->tpOperacao() ){
             case TipoOperacaoAssemblyEnum::LOAD:
+            case TipoOperacaoAssemblyEnum::MOV:
                 dsText.append( QString("%0 %1 %2").arg( row->memoryAddress(), row->values().join(" "), "\n" ) );
                 break;
             default:
@@ -201,4 +204,11 @@ void ParserService::activeLabel( const bool result, const TipoOperacaoAssemblyEn
         default:
             break;
     }
+}
+
+void ParserService::reset() const {
+    VariableManager::instance().reset();
+    MemoryManager::instance().reset();
+    RegisterManager::instance().reset();
+    LabelManager::instance().reset();
 }

@@ -79,6 +79,41 @@ QList<QString> AssemblyService::toAsmInstruction( const QList<QString> &params )
     return values;
 }
 
+QList<AssemblyRowModel*> AssemblyService::numbersToAsmInstruction( QList<QString>& params ) const {
+
+    VariableManager* variableManager = &VariableManager::instance();
+
+    QList<AssemblyRowModel*> assemblyRows = {};
+
+    QList<QString> newParams = {};
+
+    for( int i = 0; i < params.length(); i++ ){
+
+        if( !variableManager->registersVariables().contains( params[i] ) ){
+
+            VariableModel* variable = new VariableModel();
+            variable->setTpOperation( TipoOperacaoAssemblyEnum::LOAD );
+            variable->addParam( params[i] );
+
+            assemblyRows.append( load(variable) );
+
+            newParams.append( variable->getRegister()->nameRegister() );
+
+            VariableManager::instance().add( variable->getRegister()->nameRegister(), variable );
+
+            continue;
+
+        }
+
+        newParams.append( params[i] );
+
+    }
+
+    params.swap( newParams );
+
+    return assemblyRows;
+}
+
 AssemblyRowModel* AssemblyService::toAssemblyRow( const QString& rawRow, const QList<QString>& values, const TipoOperacaoAssemblyEnum& tpOperation ) const{
 
     AssemblyRowModel* assemblyRow = new AssemblyRowModel();
@@ -114,35 +149,37 @@ AssemblyRowModel* AssemblyService::toAssemblyRowByType( const TipoOperacaoAssemb
     return nullptr;
 }
 
-AssemblyRowModel* AssemblyService::bge( const VariableModel* variable ) const {
+QList<AssemblyRowModel*> AssemblyService::bge( const VariableModel* variable ) const {
     return toConditionAssemblyRow( QString( "BGE %1, %2" ), variable );
 }
 
-AssemblyRowModel *AssemblyService::beq( const VariableModel* variable) const {
+QList<AssemblyRowModel*> AssemblyService::beq( const VariableModel* variable) const {
     return toConditionAssemblyRow( QString( "BEQ %1, %2" ), variable );
 }
 
-AssemblyRowModel *AssemblyService::bgt( const VariableModel* variable) const {
+QList<AssemblyRowModel*> AssemblyService::bgt( const VariableModel* variable) const {
     return toConditionAssemblyRow( QString( "BGT %1, %2" ), variable );
 }
 
-AssemblyRowModel *AssemblyService::blt( const VariableModel* variable) const {
+QList<AssemblyRowModel*> AssemblyService::blt( const VariableModel* variable) const {
     return toConditionAssemblyRow( QString( "BLT %1, %2" ), variable );
 }
 
-AssemblyRowModel *AssemblyService::bne( const VariableModel* variable) const {
+QList<AssemblyRowModel*> AssemblyService::bne( const VariableModel* variable) const {
     return toConditionAssemblyRow( QString( "BNE %1, %2" ), variable );
 }
 
-AssemblyRowModel *AssemblyService::ble( const VariableModel* variable) const{
+QList<AssemblyRowModel*> AssemblyService::ble( const VariableModel* variable) const{
     return toConditionAssemblyRow( QString( "BLE %1, %2" ), variable );
 }
 
-AssemblyRowModel* AssemblyService::toConditionAssemblyRow( const QString& dsRow, const VariableModel *variable ) const {
+QList<AssemblyRowModel*> AssemblyService::toConditionAssemblyRow( const QString& dsRow, const VariableModel *variable ) const {
    const ConditionModel* condition = static_cast<const ConditionModel*>( variable );
-   const QList<QString> params = toAsmInstruction( condition->paramsWithoutOperators() );
+   QList<QString> params = toAsmInstruction( condition->paramsWithoutOperators() );
+   QList<AssemblyRowModel*> assemblyRows = numbersToAsmInstruction( params );
    const QString dsRowAssembly = QString( dsRow ).arg( params.first(), params.last() );
-   return toAssemblyRow( dsRowAssembly, params, condition->tpOperation() );
+   assemblyRows.append( toAssemblyRow( dsRowAssembly, params, condition->tpOperation() ) );
+   return assemblyRows;
 }
 
 AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
@@ -155,7 +192,7 @@ AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
     const QString value = variable->paramsWithoutOperators().join("");
     variable->setValue( value.toInt() );
 
-    return toAssemblyRow( rawRowAssembly, { value }, variable->tpOperation() );
+    return toAssemblyRow( rawRowAssembly, { variable->getRegister()->nameRegister(), value }, TipoOperacaoAssemblyEnum::LOAD );
 
 }
 
@@ -173,37 +210,41 @@ AssemblyRowModel *AssemblyService::sub( VariableModel* variable ) const {
     return assemblyRow;
 }
 
-AssemblyRowModel* AssemblyService::add( VariableModel *variable ) const {
+QList<AssemblyRowModel*> AssemblyService::add( VariableModel *variable ) const {
 
     RegisterManager* registerManager = &RegisterManager::instance();
 
     variable->setRegister( registerManager->getOne() );
-    const QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
+    QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
+    QList<AssemblyRowModel*> assemblyRows = numbersToAsmInstruction( params );
     QString rawRowAssembly = QString( "ADD %0, [%1], [%2]").arg( variable->getRegister()->nameRegister(), params.first(), params.last() );
 
     AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, params, variable->tpOperation() );
     assemblyRow->setVariableResultOperation( variable );
+    assemblyRows.append( assemblyRow );
 
-    return assemblyRow;
+    return assemblyRows;
 }
 
 QList<AssemblyRowModel*> AssemblyService::mov( VariableModel* variable ) const {
 
-    VariableModel* variableTemporary = new VariableModel( variable );
+    VariableModel* variableLoad = new VariableModel( variable );
 
-    AssemblyRowModel* assemblyRowLoad = load( variableTemporary );
+    AssemblyRowModel* assemblyRowLoad = load( variableLoad );
 
-    QString rawRowAssembly = QString("MOV [%0], [%1]").arg( variable->getRegister()->nameRegister(), variableTemporary->getRegister()->nameRegister() );
+    QString rawRowAssembly = QString("MOV [%0], [%1]").arg( variable->getRegister()->nameRegister(), variableLoad->getRegister()->nameRegister() );
 
-    AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, toAsmInstruction( variable->paramsWithoutOperators() ), TipoOperacaoAssemblyEnum::MOV );
+    QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
+    params.prepend( variable->getRegister()->nameRegister() );
+
+    AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, params, TipoOperacaoAssemblyEnum::MOV );
 
     // TODO this is a jerry-rigged, no time now
     if( !LabelManager::instance().hasLabelActive() ){
-        variable->setValue( assemblyRowLoad->values().at(0).toInt() );
+        variable->setValue( assemblyRowLoad->values().last().toInt() );
     }
 
-    RegisterManager::instance().free( variableTemporary->getRegister() );
-    delete variableTemporary;
+    VariableManager::instance().add( variableLoad->getRegister()->nameRegister(), variableLoad );
 
     // TODO clear register, example: mov RA, 0
 

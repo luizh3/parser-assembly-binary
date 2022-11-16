@@ -29,6 +29,8 @@ public:
     TypeLabelJumpEnum tpLabelJump() const;
     void setTpLabelJump(TypeLabelJumpEnum newTpLabelJump);
 
+    void reset();
+
 private:
     bool _resultLastOperation;
     TypeLabelJumpEnum _tpLabelJump;

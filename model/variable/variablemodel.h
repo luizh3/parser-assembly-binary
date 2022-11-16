@@ -40,8 +40,11 @@ public:
     bool isLabel() const;
     void setIsLabel( bool newIsLabel );
 
+    void setTpOperation( const TipoOperacaoAssemblyEnum& tpOperation );
+
 private:
     RegisterModel* _register;
+    TipoOperacaoAssemblyEnum _tpOperation;
     int _value;
     bool _isLabel;
     QString _type;
