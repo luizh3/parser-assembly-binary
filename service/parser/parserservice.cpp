@@ -86,9 +86,7 @@ QString ParserService::binaryRowToRawText(const QList<BinaryRowModel*>& rows) co
 QString ParserService::operationsUlaToRawText( const QList<UlaModel*>& operationsUla ) const {
 
     QString rawText = "";
-
     rawText = QString("%0 %1 %2 %3 %4").arg( QString("END").leftJustified(5), QString("VALOR1").leftJustified(12), QString("VALOR2").leftJustified(12), QString("RESULTADO").leftJustified(10), QString("\n\n"));
-
     rawText = std::accumulate( operationsUla.cbegin(), operationsUla.cend(), rawText, []( QString dsText, const UlaModel* row ){
 
         switch( row->tpOperacao() ){

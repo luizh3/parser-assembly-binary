@@ -129,16 +129,28 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
 }
 
 QString UlaService::bge( const QString &first, const QString &second ) const {
-    return first.toInt() >= second.toInt() ? "1" : "0";
+    for(int index = NR_SIZE_FOR; index >= 0; index--){
+        if(first[index] < second[index]) {
+            return "0";
+        }
+    }
+
+    return "1";
 }
 
 QString UlaService::ble(const QString &first, const QString &second) const {
-    return first.toInt() <= second.toInt() ? "1" : "0";
+    for(int index = NR_SIZE_FOR; index >= 0; index--){
+        if(first[index] > second[index]) {
+            return "0";
+        }
+    }
+
+    return "1";
 }
 
 QString UlaService::beq(const QString &first, const QString &second) const {
 
-    for(int index = NR_SIZE_FOR; index > 0; index--){
+    for(int index = NR_SIZE_FOR; index >= 0; index--){
         if(first[index] != second[index]) {
             return "0";
         }
@@ -149,7 +161,7 @@ QString UlaService::beq(const QString &first, const QString &second) const {
 
 QString UlaService::bgt(const QString &first, const QString &second) const {
 
-    for(int index = NR_SIZE_FOR; index > 0; index--){
+    for(int index = NR_SIZE_FOR; index >= 0; index--){
         if(first[index] < second[index]) {
             return "0";
         }
@@ -159,9 +171,23 @@ QString UlaService::bgt(const QString &first, const QString &second) const {
 }
 
 QString UlaService::blt(const QString &first, const QString &second) const {
-    return first.toInt() < second.toInt() ? "1" : "0";
+
+    for(int index = NR_SIZE_FOR; index >= 0; index--){
+        if(first[index] > second[index]) {
+            return "0";
+        }
+    }
+
+    return "1";
 }
 
 QString UlaService::bne(const QString &first, const QString &second) const {
-    return first.toInt() != second.toInt() ? "1" : "0";
+
+    for(int index = NR_SIZE_FOR; index >= 0; index--){
+        if(first[index] != second[index]) {
+            return "1";
+        }
+    }
+
+    return "0";
 }
