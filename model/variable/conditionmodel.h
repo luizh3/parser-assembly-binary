@@ -1,6 +1,7 @@
 #ifndef CONDITIONMODEL_H
 #define CONDITIONMODEL_H
 
+#include "QMap"
 #include "variablemodel.h"
 
 class ConditionModel : public VariableModel {

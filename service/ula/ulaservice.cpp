@@ -8,6 +8,7 @@ namespace {
     constexpr const int NR_SIZE_INT = 10;
     constexpr const int NR_BASE_BINARY = 2;
     constexpr const int NR_SIZE_BITS_VALUE = 10;
+    constexpr const int NR_SIZE_FOR = 9;
 }
 
 UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
@@ -121,16 +122,13 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
 
 QString UlaService::sub( const QString &first, const QString &second ) const {
 
-    qDebug() << " UlaService::sub [FIRST]" << first << "[SECOND]" << second;
+    qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
 
     return "0";
 
 }
 
 QString UlaService::bge( const QString &first, const QString &second ) const {
-
-    qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
-
     return first.toInt() >= second.toInt() ? "1" : "0";
 }
 
@@ -139,11 +137,25 @@ QString UlaService::ble(const QString &first, const QString &second) const {
 }
 
 QString UlaService::beq(const QString &first, const QString &second) const {
-    return first.toInt() == second.toInt() ? "1" : "0";
+
+    for(int index = NR_SIZE_FOR; index > 0; index--){
+        if(first[index] != second[index]) {
+            return "0";
+        }
+    }
+
+    return "1";
 }
 
 QString UlaService::bgt(const QString &first, const QString &second) const {
-    return first.toInt() > second.toInt() ? "1" : "0";
+
+    for(int index = NR_SIZE_FOR; index > 0; index--){
+        if(first[index] < second[index]) {
+            return "0";
+        }
+    }
+
+    return "1";
 }
 
 QString UlaService::blt(const QString &first, const QString &second) const {
