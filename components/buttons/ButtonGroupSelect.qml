@@ -47,13 +47,13 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     visible: buttonGroupSelect.hasCloseActive && checked
-                    color: mouseAreaClose.containsMouse ? "#FFFFFF" : "#818385"
+                    color: mouseAreaClose.containsMouse ? "#9c9ca0" : "#818385"
                     radius: 2
 
                     Image {
                         width: 12
                         height: 12
-                        source: "../../img/x.png"
+                        source: "../../img/close-small.png"
                         anchors.centerIn: parent
                     }
 

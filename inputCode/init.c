@@ -2,12 +2,12 @@
 
 int main () {
 
-    int first = 3;
-    int second = 3 ;
+    int first = 2;
+    int second = 7;
 
     int result = first + second;
  
-    if( result >= 5 ){
+    if( result <= 10 ){
        result = 10;
     } else {
        result = 15;

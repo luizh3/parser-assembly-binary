@@ -25,5 +25,6 @@
         <file>components/buttons/ButtonSelect.qml</file>
         <file>img/esquerda-seta.png</file>
         <file>components/subtitle/SubtitleUpCode.qml</file>
+        <file>img/close-small.png</file>
     </qresource>
 </RCC>
