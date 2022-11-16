@@ -174,24 +174,34 @@ QString UlaService::beq(const QString &first, const QString &second) const {
 
 QString UlaService::bgt(const QString &first, const QString &second) const {
 
-    for(int index = NR_SIZE_FOR; index >= 0; index--){
-        if(first[index] < second[index]) {
+    for( int index = 0; index <= NR_SIZE_FOR; index++ ){
+
+        if( first[index] > second[index] ) {
+            return "1";
+        }
+
+        if( first[index] < second[index] ){
             return "0";
         }
     }
 
-    return "1";
+    return "0";
 }
 
 QString UlaService::blt(const QString &first, const QString &second) const {
 
-    for(int index = NR_SIZE_FOR; index >= 0; index--){
-        if(first[index] > second[index]) {
+    for( int index = 0; index <= NR_SIZE_FOR; index++ ){
+
+        if( first[index] < second[index] ) {
+            return "1";
+        }
+
+        if( first[index] > second[index] ){
             return "0";
         }
     }
 
-    return "1";
+    return "0";
 }
 
 QString UlaService::bne(const QString &first, const QString &second) const {
