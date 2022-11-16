@@ -122,9 +122,26 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
 
 QString UlaService::sub( const QString &first, const QString &second ) const {
 
-    qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
+    QString result = "", first2 = first;
 
-    return "0";
+    for(int index = 0; index < NR_SIZE_INT; index++) {
+        if(first2[index] == second[index]) {
+            result.append("0");
+            continue;
+        }
+        if(first2[index] > second[index]) {
+            result.append("1");
+            continue;
+        }
+        for(int index2 = index; index2 < NR_SIZE_INT; index2++){
+            if(first2[index2] == "1") {
+                result.append("1");
+                first2.replace(index2, index2 + 1, '0');
+            }
+        }
+    }
+
+    return result;
 
 }
 
