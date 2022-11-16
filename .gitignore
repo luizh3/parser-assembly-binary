@@ -17,7 +17,7 @@
 # Ignore
 
 /users**
-**/InputCode
+/InputCode**
 **/*.user
 **/moc_*
 **/*.user
