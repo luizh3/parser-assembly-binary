@@ -3,7 +3,7 @@
 #include <service/memorymanager.h>
 
 RegisterManager::RegisterManager() :
-    _registersAlloc( { "RA", "RB", "RC", "RD", "RE", "RF", "RG", "RH","RI","RJ" } ) {
+    _registersAlloc( { "RA", "RB", "RC", "RD", "RE", "RF", "RG", "RH", "RI", "RJ", "RK", "RL", "RM" } ) {
     init();
 }
 

@@ -41,7 +41,15 @@ ConditionModel* VariableService::onIf( QString& text ) const {
     int indexEndConditionIf = text.indexOf( ")");
 
     const QString dsConditionIf = text.left( indexEndConditionIf );
-    condition->addParam( dsConditionIf.trimmed().split(' ' ) );
+
+    QList<QString> params = dsConditionIf.trimmed().split( ' ' );
+    for( const QString& current : qAsConst( params ) ){
+        if( current.isEmpty() ){
+            params.removeAll( current );
+        }
+    }
+
+    condition->addParam( params );
 
     text.remove( 0, indexEndConditionIf + nrRedundantIndex );
 

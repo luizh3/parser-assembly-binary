@@ -46,6 +46,7 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
             resultOperation = bne( values.first(), values.last() );
             break;
         case TipoOperacaoAssemblyEnum::MUL:
+            resultOperation = mul( values.first(), values.last() );
             break;
         case TipoOperacaoAssemblyEnum::DIV:
             break;
@@ -256,7 +257,29 @@ QString UlaService::bne(const QString &first, const QString &second) const {
 
 QString UlaService::mul( const QString &first, const QString &second ) const {
 
-    return "";
+    long binary1 = first.toLong();
+    long binary2 = second.toLong();
+    long multiply = 0;
+    int digit = 0;
+    long factor = 1;
+
+    while ( binary2 != 0 ) {
+
+        digit =  binary2 % NR_SIZE_INT;
+
+        if ( digit == 1 )  {
+            binary1 = binary1 * factor;
+            multiply = sum( QString::number( binary1 ), QString::number( multiply ) ).toLong();
+        } else {
+            binary1 = binary1 * factor;
+        }
+
+        binary2 = binary2 / NR_SIZE_INT;
+        factor = NR_SIZE_INT;
+
+    }
+
+    return QString::number( multiply );
 
 }
 

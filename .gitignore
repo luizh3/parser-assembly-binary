@@ -13,15 +13,16 @@
 *.Release
 *.Debug
 *.stash
+inputCode/
 
 # Ignore
 
 /users**
-/InputCode**
 **/*.user
 **/moc_*
 **/*.user
 
+**/inputCode
 **/Makefile
 **/debug
 **/release

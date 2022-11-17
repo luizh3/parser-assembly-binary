@@ -175,20 +175,34 @@ Rectangle {
                     }
                 }
 
-                TextArea {
-                    id: inputTextArea
+                Rectangle {
                     width: parent.width
                     height: parent.height - buttonGroupSelect.height
-                    color: "#f5f5f5"
-                    font.family: "Arial Black"
-                    font.pixelSize: 14
-                    wrapMode: "WordWrap"
-                    enabled: false
-                    padding: 15
+                    color: "#323232"
 
-                    background: Rectangle {
-                        color: "#323232"
-                        radius: 2
+                    Flickable {
+                        clip: true
+                        width: parent.width
+                        height: parent.height * 0.99
+                        flickableDirection: Flickable.VerticalFlick
+                        contentHeight: parent.height
+                        anchors.centerIn: parent
+
+                        ScrollBar.vertical: ScrollBar {
+                            policy: ScrollBar.AlwaysOn
+                            hoverEnabled: true
+                        }
+
+                        Label {
+                            id: inputTextArea
+                            color: "#f5f5f5"
+                            font.family: "Arial Black"
+                            font.pixelSize: 14
+                            wrapMode: "WordWrap"
+                            padding: 15
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                        }
                     }
                 }
             }
@@ -231,7 +245,7 @@ Rectangle {
                     }
                 }
 
-                TextArea {
+                Label {
                     id: inputTextAreaSecond
                     width: parent.width
                     height: parent.height - buttonGroupSelectSecond.height
@@ -239,7 +253,6 @@ Rectangle {
                     font.family: "Arial Black"
                     font.pixelSize: 14
                     wrapMode: "WordWrap"
-                    enabled: false
                     padding: 15
 
                     background: Rectangle {
