@@ -136,7 +136,6 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
     }
 
     logUlaManager->addRow( "RESULT:" + sum );
-
     logUlaManager->addRow( "SUM END\n" );
 
     return sum;
@@ -146,22 +145,38 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
 
     QString result = "", first2 = first;
 
-    for(int index = 0; index < NR_SIZE_INT; index++) {
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "SUB INIT" );
+
+    for(int index = NR_SIZE_FOR; index >= 0; index--) {
         if(first2[index] == second[index]) {
+
+            logUlaManager->addRow( first2[index] + " - " + second[index] + " = " + "0" );
+
             result.append("0");
             continue;
         }
         if(first2[index] > second[index]) {
+
+            logUlaManager->addRow( first2[index] + " - " + second[index] + " = " + "1" );
+
             result.append("1");
             continue;
         }
-        for(int index2 = index; index2 < NR_SIZE_INT; index2++){
+        for(int index2 = index; index2 >= 0; index2--){
             if(first2[index2] == "1") {
+
+                logUlaManager->addRow( first2[index] + " - " + second[index] + " = " + "1" );
+
                 result.append("1");
                 first2.replace(index2, index2 + 1, '0');
             }
         }
     }
+
+    logUlaManager->addRow( "RESULT:" + result );
+    logUlaManager->addRow( "SUB END\n" );
 
     return result;
 
@@ -169,89 +184,161 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
 
 QString UlaService::bge( const QString &first, const QString &second ) const {
 
+    QString result = "";
+
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "BGE INIT" );
+
     for( int index = 0; index <= NR_SIZE_FOR; index++ ){
 
         if( first[index] > second[index] ) {
-            return "1";
+            result = "1";
+            break;
         }
 
         if( first[index] < second[index] ){
-            return "0";
+            result = "0";
+            break;
         }
     }
 
-    return "1";
+    logUlaManager->addRow( first + (result == "1" ? " > " : (result == "0" ? " < " : " == ")) + second );
+    logUlaManager->addRow( "RESULT: " + result );
+    logUlaManager->addRow( "BGE END\n" );
+
+    return result == "" ? "1" : result;
 }
 
 QString UlaService::ble(const QString &first, const QString &second) const {
 
+    QString result = "";
+
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "BLE INIT" );
+
     for(int index = 0; index <= NR_SIZE_FOR; index++ ){
 
         if( first[index] < second[index] ) {
-            return "1";
+            result = "1";
+            break;
         }
 
         if( first[index] > second[index] ){
-            return "0";
+            result = "0";
+            break;
         }
 
     }
 
-    return "1";
+    logUlaManager->addRow( first + (result == "1" ? " < " : (result == "0" ? " > " : " == ")) + second );
+    logUlaManager->addRow( "RESULT:" + result );
+    logUlaManager->addRow( "BLE END\n" );
+
+    return result == "" ? "1" : result;
 }
 
 QString UlaService::beq(const QString &first, const QString &second) const {
 
+    QString result = "1";
+
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "BEQ INIT" );
+
     for(int index = NR_SIZE_FOR; index >= 0; index--){
         if(first[index] != second[index]) {
-            return "0";
+            logUlaManager->addRow( QString(first[index]) + " != " + second[index] );
+            result = "0";
+            break;
         }
     }
 
-    return "1";
+    logUlaManager->addRow( first + (result == "1" ? " == " : " != ") + second );
+    logUlaManager->addRow( "RESULT:" + result );
+    logUlaManager->addRow( "BEQ END\n" );
+
+    return result;
 }
 
 QString UlaService::bgt(const QString &first, const QString &second) const {
 
+    QString result = "";
+
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "BGT INIT" );
+
     for( int index = 0; index <= NR_SIZE_FOR; index++ ){
 
         if( first[index] > second[index] ) {
-            return "1";
+            result = "1";
+            break;
         }
 
         if( first[index] < second[index] ){
-            return "0";
+            result = "0";
+            break;
         }
     }
 
-    return "0";
+    logUlaManager->addRow( first + (result == "1" ? " > " : (result == "0" ? " < " : " == ")) + second );
+    logUlaManager->addRow( "RESULT:" + result );
+    logUlaManager->addRow( "BGT END\n" );
+
+    return result == "" ? "0" : result;
 }
 
 QString UlaService::blt(const QString &first, const QString &second) const {
 
+    QString result = "";
+
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "BLT INIT" );
+
     for( int index = 0; index <= NR_SIZE_FOR; index++ ){
 
         if( first[index] < second[index] ) {
-            return "1";
+            result = "1";
+            break;
         }
 
         if( first[index] > second[index] ){
-            return "0";
+            logUlaManager->addRow( QString(first[index]) + " > " + second[index] );
+            result = "0";
+            break;
         }
     }
 
-    return "0";
+    logUlaManager->addRow( first + (result == "1" ? " < " : (result == "0" ? " > " : " == ")) + second );
+    logUlaManager->addRow( "RESULT:" + result );
+    logUlaManager->addRow( "BLT END\n" );
+
+    return result == "" ? "0" : result;
 }
 
 QString UlaService::bne(const QString &first, const QString &second) const {
 
+    QString result = "0";
+
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    logUlaManager->addRow( "BNE INIT" );
+
     for(int index = NR_SIZE_FOR; index >= 0; index--){
         if(first[index] != second[index]) {
-            return "1";
+            result = "1";
+            break;
         }
     }
 
-    return "0";
+    logUlaManager->addRow( first + (result == "1" ? " != " : " == ") + second );
+    logUlaManager->addRow( "RESULT:" + result );
+    logUlaManager->addRow( "BNE END\n" );
+
+    return result;
 }
 
 QString UlaService::mul( const QString &first, const QString &second ) const {
