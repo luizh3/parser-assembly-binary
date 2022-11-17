@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include <service/memorymanager.h>
+#include <service/log/logulamanager.h>
 
 namespace {
     constexpr const int NR_SIZE_INT = 10;
@@ -43,6 +44,10 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
             break;
         case TipoOperacaoAssemblyEnum::BNE:
             resultOperation = bne( values.first(), values.last() );
+            break;
+        case TipoOperacaoAssemblyEnum::MUL:
+            break;
+        case TipoOperacaoAssemblyEnum::DIV:
             break;
         case TipoOperacaoAssemblyEnum::LOAD:
             break;
@@ -87,6 +92,8 @@ TipoOperacaoAssemblyEnum UlaService::tpOperacaoByDsUpcode( const QString& dsUpco
         { "01010", TipoOperacaoAssemblyEnum::JUMP },
         { "01011", TipoOperacaoAssemblyEnum::LABEL },
         { "01100", TipoOperacaoAssemblyEnum::MOV },
+        { "01101", TipoOperacaoAssemblyEnum::MUL },
+        { "01110", TipoOperacaoAssemblyEnum::DIV },
     };
 
     return dsOperacaoByTp.value( dsUpcode, TipoOperacaoAssemblyEnum::UNDEFINED );
@@ -96,17 +103,28 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
 
     qDebug() << " UlaService::sum [FIRST]" << first << "[SECOND]" << second;
 
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
     int nrFirst = first.toInt();
     int nrSecond = second.toInt();
 
     int rest = 0;
-    QString sum = "";
+    QString sum = "";    
+
+    logUlaManager->addRow( "SUM INIT" );
 
     while( nrFirst != 0 || nrSecond != 0 )  {
 
-        sum.prepend( QString::number( ( ( nrFirst % NR_SIZE_INT ) + ( nrSecond % NR_SIZE_INT ) + rest ) % NR_BASE_BINARY )[0] );
+        const int lastNumberFirst = ( nrFirst % NR_SIZE_INT );
+        const int lastNumberSecond = ( nrSecond % NR_SIZE_INT );
 
-        rest = (int)( ( ( nrFirst % NR_SIZE_INT ) + ( nrSecond % NR_SIZE_INT ) + rest ) / NR_BASE_BINARY );
+        sum.prepend( QString::number( ( lastNumberFirst + lastNumberSecond + rest ) % NR_BASE_BINARY )[0] );
+
+        logUlaManager->addRow( QString::number( lastNumberFirst ) + " + " + QString::number( lastNumberSecond) + " + " + QString::number( rest ) + " % " + QString::number( NR_BASE_BINARY ) + " = " + sum.at(0) );
+
+        rest = (int)( ( lastNumberFirst + lastNumberSecond + rest ) / NR_BASE_BINARY );
+
+        logUlaManager->addRow( QString::number( lastNumberFirst ) + " + " + QString::number( lastNumberSecond) + " + " + QString::number( rest ) + " / " + QString::number( NR_BASE_BINARY ) + " = " + QString::number( rest ) );
 
         nrFirst /= NR_SIZE_INT;
         nrSecond /= NR_SIZE_INT;
@@ -116,6 +134,10 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
     if ( rest != 0 ) {
         sum.prepend( QString::number( rest )[0] ) ;
     }
+
+    logUlaManager->addRow( "RESULT:" + sum );
+
+    logUlaManager->addRow( "SUM END\n" );
 
     return sum;
 }
@@ -230,4 +252,16 @@ QString UlaService::bne(const QString &first, const QString &second) const {
     }
 
     return "0";
+}
+
+QString UlaService::mul( const QString &first, const QString &second ) const {
+
+    return "";
+
+}
+
+QString UlaService::div( const QString &first, const QString &second ) const {
+
+    return "";
+
 }

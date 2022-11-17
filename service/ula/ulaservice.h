@@ -22,6 +22,9 @@ private:
     QString bgt( const QString& first, const QString& second ) const;
     QString blt( const QString& first, const QString& second ) const;
     QString bne( const QString& first, const QString& second ) const;
+    QString mul( const QString& first, const QString& second ) const;
+    QString div( const QString& first, const QString& second ) const;
+
 };
 
 #endif // ULASERVICE_H

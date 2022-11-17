@@ -150,7 +150,7 @@ Rectangle {
 
                 ButtonGroupSelect {
                     id: buttonGroupSelect
-                    width: 300
+                    width: inputTextAreaSecond.visible ? parent.width : parent.width / 2
                     height: 40
                     options: optionsGroupSelect
 
@@ -166,12 +166,12 @@ Rectangle {
                         if (!hasOptionById(optionsGroupSelectSecond,
                                            idOption)) {
                             optionsGroupSelectSecond.append(option)
+
+                            buttonGroupSelectSecond.setCheckedButton(idOption)
+
+                            updateResultCodeByIdOptions(inputTextAreaSecond,
+                                                        idOption)
                         }
-
-                        buttonGroupSelectSecond.setCheckedButton(idOption)
-
-                        updateResultCodeByIdOptions(inputTextAreaSecond,
-                                                    idOption)
                     }
                 }
 
@@ -201,7 +201,7 @@ Rectangle {
 
                 ButtonGroupSelect {
                     id: buttonGroupSelectSecond
-                    width: 300
+                    width: parent.width
                     height: 40
                     options: optionsGroupSelectSecond
                     hasCloseActive: true

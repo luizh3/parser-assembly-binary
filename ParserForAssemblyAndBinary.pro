@@ -26,6 +26,7 @@ SOURCES += \
         service/helper/utilshelper.cpp \
         service/inputcodeservice.cpp \
         service/label/labelmanager.cpp \
+        service/log/logulamanager.cpp \
         service/memorymanager.cpp \
         service/parser/parserservice.cpp \
         service/register/registermanager.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     service/helper/utilshelper.h \
     service/inputcodeservice.h \
     service/label/labelmanager.h \
+    service/log/logulamanager.h \
     service/memorymanager.h \
     service/parser/parserservice.h \
     service/register/registermanager.h \

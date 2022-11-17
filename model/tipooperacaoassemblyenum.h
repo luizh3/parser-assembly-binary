@@ -5,6 +5,8 @@ enum class TipoOperacaoAssemblyEnum {
     UNDEFINED,
     SUB,
     ADD,
+    MUL,
+    DIV,
     LOAD,
     STORE,
     MOV,

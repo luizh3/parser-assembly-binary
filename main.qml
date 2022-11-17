@@ -18,18 +18,13 @@ ApplicationWindow {
     visible: true
     title: qsTr("Parser")
     flags: Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint | Qt.Window
-    visibility: "Windowed"
+    visibility: "FullScreen"
     color: "#3b3b3b"
-
-    Component.onCompleted: {
-
-        //console.log(Qt.fontFamilies())
-    }
 
     property var currentScreen: inputCodeScreen
 
     // TODO rever esse metodo, ver se existe algum metodo/enum do proprio QT
-    property bool hasWindowed: true
+    property bool hasWindowed: false
     function changeVisibleMode() {
         hasWindowed = !hasWindowed
         root.visibility = hasWindowed ? "Windowed" : "FullScreen"

@@ -36,23 +36,23 @@ Rectangle {
             model: buttonGroupSelect.options
 
             ButtonSelect {
-                height: 40
+                width: buttonGroupSelect.width / 4.5
                 text: dsButton
                 checked: isChecked
 
                 Rectangle {
-                    width: 20
-                    height: 20
-                    anchors.margins: 10
-                    anchors.verticalCenter: parent.verticalCenter
+                    width: 15
+                    height: 15
+                    anchors.margins: 2
+                    anchors.top: parent.top
                     anchors.right: parent.right
                     visible: buttonGroupSelect.hasCloseActive && checked
                     color: mouseAreaClose.containsMouse ? "#9c9ca0" : "#818385"
                     radius: 2
 
                     Image {
-                        width: 12
-                        height: 12
+                        width: 10
+                        height: 10
                         source: "../../img/close-small.png"
                         anchors.centerIn: parent
                     }

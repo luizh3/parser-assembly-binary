@@ -51,6 +51,12 @@ QList<AssemblyRowModel*> AssemblyService::fromVariablesToAssemblyRow( const QLis
             case TipoOperacaoAssemblyEnum::BLE:
                 rowsAssembly.append( ble( current ) );
                 break;
+            case TipoOperacaoAssemblyEnum::MUL:
+                rowsAssembly.append( mul( current ) );
+                break;
+            case TipoOperacaoAssemblyEnum::DIV:
+                rowsAssembly.append( div( current ) );
+                break;
             default:
                  break;
         }
@@ -182,6 +188,23 @@ QList<AssemblyRowModel*> AssemblyService::toConditionAssemblyRow( const QString&
    return assemblyRows;
 }
 
+QList<AssemblyRowModel *> AssemblyService::toAritmeticAssemblyRow(const QString& dsRow, VariableModel* variable) const {
+
+    RegisterManager* registerManager = &RegisterManager::instance();
+
+    variable->setRegister( registerManager->getOne() );
+    QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
+    QList<AssemblyRowModel*> assemblyRows = numbersToAsmInstruction( params );
+    QString rawRowAssembly = QString( dsRow ).arg( variable->getRegister()->nameRegister(), params.first(), params.last() );
+
+    AssemblyRowModel* assemblyRow = toAssemblyRow( rawRowAssembly, params, variable->tpOperation() );
+    assemblyRow->setVariableResultOperation( variable );
+    assemblyRows.append( assemblyRow );
+
+    return assemblyRows;
+
+}
+
 AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
 
     RegisterManager* registerManager = &RegisterManager::instance();
@@ -198,6 +221,7 @@ AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
 
 AssemblyRowModel *AssemblyService::sub( VariableModel* variable ) const {
 
+    // TODO ajustar o sub para ser igual ao add
     RegisterManager* registerManager = &RegisterManager::instance();
 
     variable->setRegister( registerManager->getOne() );
@@ -250,4 +274,12 @@ QList<AssemblyRowModel*> AssemblyService::mov( VariableModel* variable ) const {
 
     return { assemblyRowLoad, assemblyRow };
 
+}
+
+QList<AssemblyRowModel*> AssemblyService::mul( VariableModel* variable ) const {
+    return toAritmeticAssemblyRow( "MUL %0, [%1], [%2]", variable );
+}
+
+QList<AssemblyRowModel*> AssemblyService::div( VariableModel* variable ) const {
+    return toAritmeticAssemblyRow( "DIV %0, [%1], [%2]", variable );
 }

@@ -9,5 +9,5 @@ QList<QString> InstructionHelper::allTypes() {
 }
 
 QList<QString> InstructionHelper::allOperators() {
-    return { "=", "+", "-", "==", ">", "<", ">=", "<=", "!=" };
+    return { "=", "+", "-", "==", ">", "<", ">=", "<=", "!=", "/", "*" };
 }

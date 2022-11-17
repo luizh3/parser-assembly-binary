@@ -21,7 +21,7 @@ Rectangle {
 
     Label {
         id: description
-        font.pixelSize: 15
+        font.pixelSize: buttonSelect.width < 80 ? 10 : 15
         color: "#fff"
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter

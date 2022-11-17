@@ -17,6 +17,8 @@ private:
    AssemblyRowModel* sub( VariableModel* variable ) const;
    QList<AssemblyRowModel*> add( VariableModel* variable ) const;
    QList<AssemblyRowModel*> mov( VariableModel* variable ) const;
+   QList<AssemblyRowModel*> mul( VariableModel* variable ) const;
+   QList<AssemblyRowModel*> div( VariableModel* variable ) const;
 
    QList<AssemblyRowModel*> bge( const VariableModel* variable ) const;
    QList<AssemblyRowModel*> beq( const VariableModel* variable ) const;
@@ -25,6 +27,7 @@ private:
    QList<AssemblyRowModel*> bne( const VariableModel* variable ) const;
    QList<AssemblyRowModel*> ble( const VariableModel* variable ) const;
 
+   QList<AssemblyRowModel*> toAritmeticAssemblyRow( const QString& dsRow, VariableModel* variable ) const;
    QList<AssemblyRowModel*> toConditionAssemblyRow( const QString& dsRow, const VariableModel* variable ) const;
 
 };

@@ -41,6 +41,14 @@ TipoOperacaoAssemblyEnum VariableModel::tpOperation( const bool isAlreadyAllocat
         return _tpOperation;
     }
 
+    if( _params.contains("/") ){
+        return TipoOperacaoAssemblyEnum::DIV;
+    }
+
+    if( _params.contains("*") ){
+        return TipoOperacaoAssemblyEnum::MUL;
+    }
+
     if( _params.contains("+") ){
         return TipoOperacaoAssemblyEnum::ADD;
     }

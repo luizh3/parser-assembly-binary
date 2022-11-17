@@ -12,7 +12,7 @@ MemoryManager::MemoryManager() :
     _currentMemoryAssembly("0"),
     _valuesByAddress( {} ){}
 
-MemoryManager &MemoryManager::instance() {
+MemoryManager& MemoryManager::instance() {
     static MemoryManager memoryController;
     return memoryController;
 }
