@@ -10,10 +10,6 @@ namespace {
 
 BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* assemblyRow ) const {
 
-    if( LabelManager::instance().isLabelSkip() ){
-        return nullptr;
-    }
-
     VariableManager* variableManager = &VariableManager::instance();
     BinaryRowModel* binaryRow = new BinaryRowModel();
 
@@ -38,6 +34,11 @@ BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* ass
                     break;
             }
 
+            continue;
+        }
+
+        if( assemblyRow->typeOperation() == TipoOperacaoAssemblyEnum::LABEL || assemblyRow->typeOperation() == TipoOperacaoAssemblyEnum::JUMP ){
+            valuesStore.append( assemblyRow->values().first() );
             continue;
         }
 

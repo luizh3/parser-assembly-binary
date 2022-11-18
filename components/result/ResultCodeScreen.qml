@@ -175,35 +175,10 @@ Rectangle {
                     }
                 }
 
-                Rectangle {
+                ResultArea {
+                    id: inputTextArea
                     width: parent.width
                     height: parent.height - buttonGroupSelect.height
-                    color: "#323232"
-
-                    Flickable {
-                        clip: true
-                        width: parent.width
-                        height: parent.height * 0.99
-                        flickableDirection: Flickable.VerticalFlick
-                        contentHeight: parent.height
-                        anchors.centerIn: parent
-
-                        ScrollBar.vertical: ScrollBar {
-                            policy: ScrollBar.AlwaysOn
-                            hoverEnabled: true
-                        }
-
-                        Label {
-                            id: inputTextArea
-                            color: "#f5f5f5"
-                            font.family: "Arial Black"
-                            font.pixelSize: 14
-                            wrapMode: "WordWrap"
-                            padding: 15
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                        }
-                    }
                 }
             }
 
@@ -245,20 +220,10 @@ Rectangle {
                     }
                 }
 
-                Label {
+                ResultArea {
                     id: inputTextAreaSecond
                     width: parent.width
-                    height: parent.height - buttonGroupSelectSecond.height
-                    color: "#f5f5f5"
-                    font.family: "Arial Black"
-                    font.pixelSize: 14
-                    wrapMode: "WordWrap"
-                    padding: 15
-
-                    background: Rectangle {
-                        color: "#323232"
-                        radius: 2
-                    }
+                    height: parent.height - buttonGroupSelect.height
                 }
             }
         }

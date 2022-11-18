@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include <service/memorymanager.h>
+#include <service/label/labelmanager.h>
 #include <service/log/logulamanager.h>
 
 namespace {
@@ -13,6 +14,10 @@ namespace {
 }
 
 UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
+
+    if( LabelManager::instance().isLabelSkip() ){
+        return nullptr;
+    }
 
     MemoryManager* memoryManager = &MemoryManager::instance();
     const TipoOperacaoAssemblyEnum tpOperacao = tpOperacaoByDsUpcode( binary->dsUpcode() );
@@ -49,6 +54,7 @@ UlaModel* UlaService::process( const BinaryRowModel* binary ) const {
             resultOperation = mul( values.first(), values.last() );
             break;
         case TipoOperacaoAssemblyEnum::DIV:
+            resultOperation = div( values.first(), values.last() );
             break;
         case TipoOperacaoAssemblyEnum::LOAD:
             break;
@@ -320,7 +326,7 @@ QString UlaService::blt(const QString &first, const QString &second) const {
     return result == "" ? "0" : result;
 }
 
-QString UlaService::bne(const QString &first, const QString &second) const {
+QString UlaService::bne( const QString &first, const QString &second ) const {
 
     QString result = "0";
 
@@ -370,8 +376,32 @@ QString UlaService::mul( const QString &first, const QString &second ) const {
 
 }
 
-QString UlaService::div( const QString &first, const QString &second ) const {
+QString UlaService::div( const QString &first, const QString& second ) const {
 
-    return "";
+   QString secondModified;
+   QString umBinario = "0000000001";
+   QString zeroBinario = "0000000000";
+   QString resultado = first;
+   QString valor;
+
+   QString quociente = zeroBinario;
+
+   for( int index = 0; index <= NR_SIZE_FOR; index++ ){
+        if( second[index] == "0" ) {
+            secondModified[index] = '1';
+        } else {
+            secondModified[index] = '0';
+        }
+    }
+
+    valor = sum( secondModified, umBinario );
+
+    while( resultado != zeroBinario ) {
+        resultado = sum( resultado, valor );
+        resultado.remove( 0, 1 );
+        quociente = sum( quociente, umBinario );
+    }
+
+    return quociente;
 
 }

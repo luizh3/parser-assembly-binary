@@ -141,11 +141,14 @@ AssemblyRowModel* AssemblyService::toAssemblyRowByType( const TipoOperacaoAssemb
     switch( tpOperation ){
         case TipoOperacaoAssemblyEnum::JUMP: {
             rawRowAssembly = QString( "JMP .L%0" ).arg( values.first() );
-            return toAssemblyRow( rawRowAssembly, values, TipoOperacaoAssemblyEnum::JUMP );
+            const QString memory = MemoryManager::instance().allocBinaryMemory();
+            LabelManager::instance().addMemoryByLabel( values.first(), memory );
+            return toAssemblyRow( rawRowAssembly, { memory }, TipoOperacaoAssemblyEnum::JUMP );
         }
         case TipoOperacaoAssemblyEnum::LABEL: {
              rawRowAssembly = QString( ".L%0" ).arg( values.first() );
-            return toAssemblyRow( rawRowAssembly, values, TipoOperacaoAssemblyEnum::LABEL );
+             const QString memory = LabelManager::instance().getMemoryByLabel( values.first() );
+             return toAssemblyRow( rawRowAssembly, { memory }, TipoOperacaoAssemblyEnum::LABEL );
         }
         default: {
             break;

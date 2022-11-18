@@ -31,11 +31,15 @@ public:
 
     void reset();
 
+    void addMemoryByLabel( const QString& label, const QString& memory );
+    QString getMemoryByLabel( const QString& label ) const;
+
 private:
     bool _resultLastOperation;
     TypeLabelJumpEnum _tpLabelJump;
     int _nrCurrentLabel;
     QString _dsCurrentLabel;
+    QMap<QString,QString> _memoryByLabel;
 };
 
 #endif // LABELMANAGER_H

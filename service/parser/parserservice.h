@@ -25,6 +25,9 @@ private:
 
     void reset() const;
 
+    void fromAssemblyToInstruction( const AssemblyRowModel* assemblyRow, QList<BinaryRowModel*>& rowsBinary, QList<UlaModel*>& operationsUla ) const;
+    void fromAssemblyToInstructions( const QList<AssemblyRowModel*>& assemblyRows, QList<BinaryRowModel*>& rowsBinary, QList<UlaModel*>& operationsUla ) const;
+
 };
 
 #endif // PARSERSERVICE_H

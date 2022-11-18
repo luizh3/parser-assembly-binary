@@ -3,7 +3,9 @@
 LabelManager::LabelManager() :
     _resultLastOperation( false ),
     _tpLabelJump( TypeLabelJumpEnum::NONE ),
-    _nrCurrentLabel(0){}
+    _nrCurrentLabel(0),
+    _dsCurrentLabel(""),
+    _memoryByLabel({}){}
 
 LabelManager& LabelManager::instance() {
     static LabelManager labelManger;
@@ -43,4 +45,12 @@ void LabelManager::reset() {
     _nrCurrentLabel = 0;
     _tpLabelJump = TypeLabelJumpEnum::NONE;
     _resultLastOperation = false;
+}
+
+void LabelManager::addMemoryByLabel( const QString& label, const QString& memory ) {
+    _memoryByLabel.insert( label, memory );
+}
+
+QString LabelManager::getMemoryByLabel(const QString& label ) const {
+    return _memoryByLabel.value( label, "" );
 }

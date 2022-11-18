@@ -26,5 +26,6 @@
         <file>img/esquerda-seta.png</file>
         <file>components/subtitle/SubtitleUpCode.qml</file>
         <file>img/close-small.png</file>
+        <file>components/result/ResultArea.qml</file>
     </qresource>
 </RCC>

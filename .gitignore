@@ -13,7 +13,7 @@
 *.Release
 *.Debug
 *.stash
-inputCode/
+
 
 # Ignore
 
@@ -22,7 +22,6 @@ inputCode/
 **/moc_*
 **/*.user
 
-**/inputCode
 **/Makefile
 **/debug
 **/release
