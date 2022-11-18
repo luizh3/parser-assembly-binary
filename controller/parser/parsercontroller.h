@@ -9,6 +9,8 @@ class ParserController : public QObject {
     Q_PROPERTY( QString dsCodeResultUla READ dsCodeResultUla NOTIFY dsCodeResultUlaChanged )
     Q_PROPERTY( QString dsCodeResultBinary READ dsCodeResultBinary NOTIFY dsCodeResultBinaryChanged )
     Q_PROPERTY( QString dsCodeResultAssembly READ dsCodeResultAssembly NOTIFY dsCodeResultAssemblyChanged )
+    Q_PROPERTY( QString dsSubtitle READ dsSubtitle NOTIFY dsSubtitleChanged )
+    Q_PROPERTY( QString dsDetailsUla READ dsDetailsUla NOTIFY dsDetailsUlaChanged )
 public:
     const QString& dsCodeResultUla() const;
     void setDsCodeResultUla( const QString &newDsCodeResultUla );
@@ -22,6 +24,12 @@ public:
     const QString& dsCodeInputC() const;
     void setDsCodeInputC( const QString &newDsCodeInputC );
 
+    const QString &dsSubtitle() const;
+    void setDsSubtitle(const QString &newDsSubtitle);
+
+    const QString &dsDetailsUla() const;
+    void setDsDetailsUla(const QString &newDsDetailsUla);
+
 public slots:
     void makeParser( QString dsCodeInC );
 signals:
@@ -29,6 +37,8 @@ signals:
     void dsCodeResultBinaryChanged();
     void dsCodeResultAssemblyChanged();
     void dsCodeInputCChanged();
+    void dsSubtitleChanged();
+    void dsDetailsUlaChanged();
 
     void parserFnished() const;
 
@@ -37,6 +47,11 @@ private:
     QString _dsCodeResultUla;
     QString _dsCodeResultBinary;
     QString _dsCodeResultAssembly;
+    QString _dsSubtitle;
+    QString _dsDetailsUla;
+
+    QString subtitleUpCode() const;
+
 };
 
 #endif // PARSERCONTROLLER_H

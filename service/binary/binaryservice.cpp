@@ -56,6 +56,23 @@ BinaryRowModel* BinaryService::fromAssemblyToBinary( const AssemblyRowModel* ass
 }
 
 QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOperacao ) const {
+    return mapDsUpCodeByTp().value( tpOperacao, "" );
+}
+
+QString BinaryService::toBinary( unsigned int number ) const {
+
+    QString binary = "";
+
+    while( number != 0 ){
+        binary.prepend( QString::number( number % 2 ) );
+        number /= 2;
+    }
+
+    return binary;
+
+}
+
+QMap<TipoOperacaoAssemblyEnum, QString> BinaryService::mapDsUpCodeByTp() const {
 
     const QMap<TipoOperacaoAssemblyEnum, QString> dsOperacaoByTp = {
         { TipoOperacaoAssemblyEnum::LOAD,"00001" },
@@ -74,19 +91,7 @@ QString BinaryService::tpOperacaoToUpcode( const TipoOperacaoAssemblyEnum& tpOpe
         { TipoOperacaoAssemblyEnum::DIV, "01110" },
     };
 
-    return dsOperacaoByTp.value( tpOperacao, "" );
-}
-
-QString BinaryService::toBinary( unsigned int number ) const {
-
-    QString binary = "";
-
-    while( number != 0 ){
-        binary.prepend( QString::number( number % 2 ) );
-        number /= 2;
-    }
-
-    return binary;
+    return dsOperacaoByTp;
 
 }
 

@@ -81,8 +81,19 @@ ApplicationWindow {
             width: 80
             height: parent.height
 
+            visibleInformation: resultCodeScreen.visible
+            visibleSubtitle: resultCodeScreen.visible
+
             onConfig: {
                 settingsScreen.open()
+            }
+
+            onSubtitle: {
+                resultCodeScreen.subtitle()
+            }
+
+            onDetails: {
+                resultCodeScreen.details()
             }
         }
 

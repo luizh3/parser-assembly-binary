@@ -14,11 +14,59 @@ Rectangle {
 
     signal goBack
 
+    signal details
+    signal subtitle
+
+    onSubtitle: {
+
+        // TODO create a method for this, to be able to reuse
+        var objSubtitle = {
+            "idElement": ResultCodeScreen.TypeResultEnum.SUBTITLE,
+            "dsButton": "Legenda",
+            "isChecked": optionsGroupSelectSecond.count == 0
+        }
+
+        columnSecondTextArea.visible = true
+
+        if (!hasOptionById(optionsGroupSelectSecond,
+                           ResultCodeScreen.TypeResultEnum.SUBTITLE)) {
+
+            updateResultCodeByIdOptions(
+                        inputTextAreaSecond,
+                        ResultCodeScreen.TypeResultEnum.SUBTITLE)
+
+            optionsGroupSelectSecond.append(objSubtitle)
+        }
+    }
+
+    onDetails: {
+
+        var objDetails = {
+            "idElement": ResultCodeScreen.TypeResultEnum.DETAILS_ULA,
+            "dsButton": "Logs da Ula",
+            "isChecked": optionsGroupSelectSecond.count == 0
+        }
+
+        columnSecondTextArea.visible = true
+
+        if (!hasOptionById(optionsGroupSelectSecond,
+                           ResultCodeScreen.TypeResultEnum.DETAILS_ULA)) {
+
+            updateResultCodeByIdOptions(
+                        inputTextAreaSecond,
+                        ResultCodeScreen.TypeResultEnum.DETAILS_ULA)
+
+            optionsGroupSelectSecond.append(objDetails)
+        }
+    }
+
     enum TypeResultEnum {
         C = 1,
         ASSEMBLY = 2,
         BINARY = 3,
-        ULA = 4
+        ULA = 4,
+        DETAILS_ULA = 5,
+        SUBTITLE = 6
     }
 
     onVisibleChanged: function () {
@@ -75,6 +123,12 @@ Rectangle {
             break
         case ResultCodeScreen.TypeResultEnum.ULA:
             componentUpdate.text = parserController.dsCodeResultUla
+            break
+        case ResultCodeScreen.TypeResultEnum.DETAILS_ULA:
+            componentUpdate.text = parserController.dsDetailsUla
+            break
+        case ResultCodeScreen.TypeResultEnum.SUBTITLE:
+            componentUpdate.text = parserController.dsSubtitle
             break
         default:
             break

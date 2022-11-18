@@ -92,6 +92,8 @@ QString ParserService::operationsUlaToRawText( const QList<UlaModel*>& operation
         switch( row->tpOperacao() ){
             case TipoOperacaoAssemblyEnum::LOAD:
             case TipoOperacaoAssemblyEnum::MOV:
+            case TipoOperacaoAssemblyEnum::JUMP:
+            case TipoOperacaoAssemblyEnum::LABEL:
                 dsText.append( QString("%0 %1 %2").arg( row->memoryAddress(), row->values().join(" "), "\n" ) );
                 break;
             default:
@@ -225,3 +227,4 @@ void ParserService::reset() const {
     RegisterManager::instance().reset();
     LabelManager::instance().reset();
 }
+

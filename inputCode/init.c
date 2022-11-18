@@ -7,13 +7,14 @@ int main () {
 
     int result = first + second;
  
-    if( result  >= 1 ){
-       result = 10 * 3;
+    if( result  >= 12 ){
+       result = 20 * 2;
     } else {
        result = 15;
     }
 
     int h = 1 + result;
 
-
 }
+
+
