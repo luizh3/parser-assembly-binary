@@ -26,3 +26,7 @@ QString LogUlaManager::logFormated() const {
 
     return log;
 }
+
+void LogUlaManager::reset() {
+    _rows.clear();
+}

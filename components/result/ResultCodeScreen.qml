@@ -17,6 +17,10 @@ Rectangle {
     signal details
     signal subtitle
 
+    function reset() {
+        optionsGroupSelectSecond.clear()
+    }
+
     onSubtitle: {
 
         // TODO create a method for this, to be able to reuse
@@ -31,12 +35,14 @@ Rectangle {
         if (!hasOptionById(optionsGroupSelectSecond,
                            ResultCodeScreen.TypeResultEnum.SUBTITLE)) {
 
-            updateResultCodeByIdOptions(
-                        inputTextAreaSecond,
-                        ResultCodeScreen.TypeResultEnum.SUBTITLE)
-
             optionsGroupSelectSecond.append(objSubtitle)
+
+            buttonGroupSelectSecond.setCheckedButton(
+                        ResultCodeScreen.TypeResultEnum.SUBTITLE)
         }
+
+        updateResultCodeByIdOptions(inputTextAreaSecond,
+                                    ResultCodeScreen.TypeResultEnum.SUBTITLE)
     }
 
     onDetails: {
@@ -52,12 +58,14 @@ Rectangle {
         if (!hasOptionById(optionsGroupSelectSecond,
                            ResultCodeScreen.TypeResultEnum.DETAILS_ULA)) {
 
-            updateResultCodeByIdOptions(
-                        inputTextAreaSecond,
-                        ResultCodeScreen.TypeResultEnum.DETAILS_ULA)
-
             optionsGroupSelectSecond.append(objDetails)
+
+            buttonGroupSelectSecond.setCheckedButton(
+                        ResultCodeScreen.TypeResultEnum.DETAILS_ULA)
         }
+
+        updateResultCodeByIdOptions(inputTextAreaSecond,
+                                    ResultCodeScreen.TypeResultEnum.DETAILS_ULA)
     }
 
     enum TypeResultEnum {
@@ -290,6 +298,7 @@ Rectangle {
             icon: "../../img/esquerda-seta.png"
 
             onClicked: {
+                resultCodeScreen.reset()
                 resultCodeScreen.goBack()
             }
         }

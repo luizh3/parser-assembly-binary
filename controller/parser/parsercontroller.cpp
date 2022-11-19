@@ -17,6 +17,8 @@ void ParserController::makeParser( QString dsCodeInC ) {
     setDsDetailsUla( LogUlaManager::instance().logFormated() );
     setDsSubtitle( subtitleUpCode() );
 
+    LogUlaManager::instance().reset();
+
     delete parserResult;
 
     emit parserFnished();

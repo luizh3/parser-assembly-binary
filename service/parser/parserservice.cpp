@@ -165,6 +165,8 @@ void ParserService::toObjectsFromText( QString& dsText, QList<AssemblyRowModel*>
                 QString rawIfContent = condition->rawIfContent();
                 QString rawElseContent = condition->rawElseContent();
 
+                bool hasElse = !rawElseContent.isEmpty();
+
                 LabelManager* label = &LabelManager::instance();
 
                 QString firstLabel = label->getDsNextLabel();
@@ -176,8 +178,11 @@ void ParserService::toObjectsFromText( QString& dsText, QList<AssemblyRowModel*>
                 fromAssemblyToInstruction( rowsAssembly.last(), rowsBinary, operationsUla );
 
                 toObjectsFromText( rawIfContent, rowsAssembly, rowsBinary, operationsUla );
-                rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::JUMP, { secondLabel } ) );
-                fromAssemblyToInstruction( rowsAssembly.last(), rowsBinary, operationsUla );
+
+                if( hasElse ){
+                    rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::JUMP, { secondLabel } ) );
+                    fromAssemblyToInstruction( rowsAssembly.last(), rowsBinary, operationsUla );
+                }
 
                 label->setTpLabelJump( label->hasLabelActive() ? LabelManager::TypeLabelJumpEnum::NONE : LabelManager::TypeLabelJumpEnum::JUMP );
 
@@ -186,8 +191,11 @@ void ParserService::toObjectsFromText( QString& dsText, QList<AssemblyRowModel*>
                 toObjectsFromText( rawElseContent, rowsAssembly, rowsBinary, operationsUla );
 
                 label->setTpLabelJump( LabelManager::TypeLabelJumpEnum::NONE );
-                rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::LABEL, { secondLabel } ) );
-                fromAssemblyToInstruction( rowsAssembly.last(), rowsBinary, operationsUla );
+
+                if( hasElse ){
+                    rowsAssembly.append( AssemblyService().toAssemblyRowByType( TipoOperacaoAssemblyEnum::LABEL, { secondLabel } ) );
+                    fromAssemblyToInstruction( rowsAssembly.last(), rowsBinary, operationsUla );
+                }
 
             }
 

@@ -11,6 +11,8 @@ public:
     void addRow( const QString& row );
     QString logFormated() const;
 
+    void reset();
+
 private:
     QList<QString> _rows;
 };

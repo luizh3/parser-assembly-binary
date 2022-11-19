@@ -11,9 +11,6 @@ QMap<QString,VariableModel*> VariableService::fromTextToVariables( QString& text
         if( currentText.contains( "if" ) ){
             ConditionModel* condition = onIf( text );
 
-//            condition->setVariablesElseContent( fromTextToVariables( condition->rawElseContent(), true ) );
-//            condition->setVariablesIfContent( fromTextToVariables( condition->rawIfContent(), true ) );
-
             VariableManager::instance().add( "CONDITION", condition );
 
             return { { "CONDITION", condition } };

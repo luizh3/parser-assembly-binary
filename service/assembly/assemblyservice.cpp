@@ -210,12 +210,25 @@ QList<AssemblyRowModel *> AssemblyService::toAritmeticAssemblyRow(const QString&
 
 AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
 
+    VariableManager* variableManager = &VariableManager::instance();
+
     RegisterManager* registerManager = &RegisterManager::instance();
 
     variable->setRegister( registerManager->getOne() );
-    QString rawRowAssembly = QString( "LDR %0, %1").arg( variable->getRegister()->nameRegister(), variable->paramsWithoutOperators().join("") );
 
-    const QString value = variable->paramsWithoutOperators().join("");
+    QString dsValue = variable->paramsWithoutOperators().join("");
+
+    VariableModel* variableCopy = nullptr;
+
+    if( variableManager->getAllKeys().contains( dsValue ) ){
+        variableCopy = variableManager->get( dsValue );
+    }
+
+    QString dsAssemblyRow = variableCopy ? QString( "LDR %0, [%1]") : QString( "LDR %0, %1");
+
+    QString rawRowAssembly = dsAssemblyRow.arg( variable->getRegister()->nameRegister(), variableCopy ? variableCopy->getRegister()->nameRegister() : dsValue );
+
+    const QString value = variableCopy ? QString::number( variableCopy->value() ) : dsValue;
     variable->setValue( value.toInt() );
 
     return toAssemblyRow( rawRowAssembly, { variable->getRegister()->nameRegister(), value }, TipoOperacaoAssemblyEnum::LOAD );
