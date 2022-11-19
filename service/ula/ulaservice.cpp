@@ -152,37 +152,39 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
 
 QString UlaService::sub( const QString &first, const QString &second ) const {
 
-    QString result = "", first2 = first;
+    QString result = "";
+    bool inverter = false;
 
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "SUB INIT" );
 
     for(int index = NR_SIZE_FOR; index >= 0; index--) {
-        if(first2[index] == second[index]) {
+        if(first[index] == second[index]) {
 
-            logUlaManager->addRow( first2[index] + " - " + second[index] + " = " + "0" );
+            result.append((!inverter) ? "0" : "1");
 
-            result.append("0");
             continue;
         }
-        if(first2[index] > second[index]) {
 
-            logUlaManager->addRow( first2[index] + " - " + second[index] + " = " + "1" );
+        if(first[index] > second[index]) {
 
+            result.append((!inverter) ? "1" : "0");
+
+            inverter = false;
+
+            continue;
+        }
+
+        if(!inverter) {
+            inverter = true;
             result.append("1");
-            continue;
-        }
-        for(int index2 = index; index2 >= 0; index2--){
-            if(first2[index2] == "1") {
-
-                logUlaManager->addRow( first2[index] + " - " + second[index] + " = " + "1" );
-
-                result.append("1");
-                first2.replace(index2, index2 + 1, '0');
-            }
+        } else {
+            result.append("0");
         }
     }
+
+    std::reverse(result.begin(), result.end());
 
     logUlaManager->addRow( "RESULT:" + result );
     logUlaManager->addRow( "SUB END\n" );
