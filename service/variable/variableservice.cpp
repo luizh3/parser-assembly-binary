@@ -6,6 +6,8 @@
 
 QMap<QString,VariableModel*> VariableService::fromTextToVariables( QString& text, const bool isLabel ) const {
 
+    // TODO change this, because now so allows one if
+
     QString currentText = text.left( text.indexOf(";") );
 
         if( currentText.contains( "if" ) ){

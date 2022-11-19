@@ -14,5 +14,7 @@
         <file alias="img/code.png">img/code.png</file>
         <file alias="img/esquerda-seta.png">img/esquerda-seta.png</file>
         <file alias="img/close-small.png">img/close-small.png</file>
+        <file alias="img/information.png">img/information.png</file>
+        <file alias="img/legendas.png">img/legendas.png</file>
     </qresource>
 </RCC>

@@ -36,10 +36,10 @@ Rectangle {
                            ResultCodeScreen.TypeResultEnum.SUBTITLE)) {
 
             optionsGroupSelectSecond.append(objSubtitle)
-
-            buttonGroupSelectSecond.setCheckedButton(
-                        ResultCodeScreen.TypeResultEnum.SUBTITLE)
         }
+
+        buttonGroupSelectSecond.setCheckedButton(
+                    ResultCodeScreen.TypeResultEnum.SUBTITLE)
 
         updateResultCodeByIdOptions(inputTextAreaSecond,
                                     ResultCodeScreen.TypeResultEnum.SUBTITLE)
@@ -47,9 +47,10 @@ Rectangle {
 
     onDetails: {
 
+        // TODO create a method for this, to be able to reuse
         var objDetails = {
             "idElement": ResultCodeScreen.TypeResultEnum.DETAILS_ULA,
-            "dsButton": "Logs da Ula",
+            "dsButton": "Logs Ula",
             "isChecked": optionsGroupSelectSecond.count == 0
         }
 
@@ -59,10 +60,10 @@ Rectangle {
                            ResultCodeScreen.TypeResultEnum.DETAILS_ULA)) {
 
             optionsGroupSelectSecond.append(objDetails)
-
-            buttonGroupSelectSecond.setCheckedButton(
-                        ResultCodeScreen.TypeResultEnum.DETAILS_ULA)
         }
+
+        buttonGroupSelectSecond.setCheckedButton(
+                    ResultCodeScreen.TypeResultEnum.DETAILS_ULA)
 
         updateResultCodeByIdOptions(inputTextAreaSecond,
                                     ResultCodeScreen.TypeResultEnum.DETAILS_ULA)

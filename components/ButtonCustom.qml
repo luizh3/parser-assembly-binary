@@ -20,6 +20,7 @@ Rectangle {
     Row {
         width: parent.width
         height: parent.height
+
         Image {
             id: name
             width: 48

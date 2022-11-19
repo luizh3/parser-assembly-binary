@@ -47,10 +47,11 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.right: parent.right
                     visible: buttonGroupSelect.hasCloseActive && checked
-                    color: mouseAreaClose.containsMouse ? "#9c9ca0" : "#818385"
+                    color: "transparent"
                     radius: 2
 
                     Image {
+                        id: img
                         width: 10
                         height: 10
                         source: "../../img/close-small.png"

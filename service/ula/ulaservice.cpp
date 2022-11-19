@@ -122,7 +122,7 @@ QString UlaService::sum( const QString& first, const QString& second ) const {
 
     logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
-    while( nrFirst != 0 || nrSecond != 0 )  {
+    while( nrFirst != 0 || nrSecond != 0 )  {        
 
         const int lastNumberFirst = ( nrFirst % NR_SIZE_INT );
         const int lastNumberSecond = ( nrSecond % NR_SIZE_INT );
@@ -158,6 +158,7 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "SUB INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
     for(int index = NR_SIZE_FOR; index >= 0; index--) {
         if(first[index] == second[index]) {
@@ -207,17 +208,18 @@ QString UlaService::bge( const QString &first, const QString&second ) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "BGE INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
     for( int index = 0; index <= NR_SIZE_FOR; index++ ){
 
-        logUlaManager->addRow( QString( "%0 > %2").arg( first[index], second[index] ) );
+        logUlaManager->addRow( QString( "%0 > %1").arg( first[index], second[index] ) );
 
         if( first[index] > second[index] ) {
             result = "1";
             break;
         }
 
-        logUlaManager->addRow( QString( "%0 < %2").arg( first[index], second[index] ) );
+        logUlaManager->addRow( QString( "%0 < %1").arg( first[index], second[index] ) );
 
         if( first[index] < second[index] ){
             result = "0";
@@ -238,13 +240,18 @@ QString UlaService::ble(const QString &first, const QString &second) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "BLE INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
     for(int index = 0; index <= NR_SIZE_FOR; index++ ){
+
+        logUlaManager->addRow( QString( "%0 < %1").arg( first[index], second[index] ) );
 
         if( first[index] < second[index] ) {
             result = "1";
             break;
         }
+
+        logUlaManager->addRow( QString( "%0 > %1").arg( first[index], second[index] ) );
 
         if( first[index] > second[index] ){
             result = "0";
@@ -253,7 +260,6 @@ QString UlaService::ble(const QString &first, const QString &second) const {
 
     }
 
-    logUlaManager->addRow( first + (result == "1" ? " < " : (result == "0" ? " > " : " == ")) + second );
     logUlaManager->addRow( "RESULT:" + result );
     logUlaManager->addRow( "BLE END\n" );
 
@@ -267,16 +273,18 @@ QString UlaService::beq(const QString &first, const QString &second) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "BEQ INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
     for(int index = NR_SIZE_FOR; index >= 0; index--){
+
+        logUlaManager->addRow( QString( "%0 != %1").arg( first[index], second[index] ) );
+
         if(first[index] != second[index]) {
-            logUlaManager->addRow( QString(first[index]) + " != " + second[index] );
             result = "0";
             break;
         }
     }
 
-    logUlaManager->addRow( first + (result == "1" ? " == " : " != ") + second );
     logUlaManager->addRow( "RESULT:" + result );
     logUlaManager->addRow( "BEQ END\n" );
 
@@ -290,13 +298,18 @@ QString UlaService::bgt(const QString &first, const QString &second) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "BGT INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
     for( int index = 0; index <= NR_SIZE_FOR; index++ ){
+
+        logUlaManager->addRow( QString( "%0 > %1").arg( first[index], second[index] ) );
 
         if( first[index] > second[index] ) {
             result = "1";
             break;
         }
+
+        logUlaManager->addRow( QString( "%0 < %1").arg( first[index], second[index] ) );
 
         if( first[index] < second[index] ){
             result = "0";
@@ -304,7 +317,6 @@ QString UlaService::bgt(const QString &first, const QString &second) const {
         }
     }
 
-    logUlaManager->addRow( first + (result == "1" ? " > " : (result == "0" ? " < " : " == ")) + second );
     logUlaManager->addRow( "RESULT:" + result );
     logUlaManager->addRow( "BGT END\n" );
 
@@ -318,22 +330,25 @@ QString UlaService::blt(const QString &first, const QString &second) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "BLT INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
     for( int index = 0; index <= NR_SIZE_FOR; index++ ){
+
+        logUlaManager->addRow( QString( "%0 < %1").arg( first[index], second[index] ) );
 
         if( first[index] < second[index] ) {
             result = "1";
             break;
         }
 
+        logUlaManager->addRow( QString( "%0 > %1").arg( first[index], second[index] ) );
+
         if( first[index] > second[index] ){
-            logUlaManager->addRow( QString(first[index]) + " > " + second[index] );
             result = "0";
             break;
         }
     }
 
-    logUlaManager->addRow( first + (result == "1" ? " < " : (result == "0" ? " > " : " == ")) + second );
     logUlaManager->addRow( "RESULT:" + result );
     logUlaManager->addRow( "BLT END\n" );
 
@@ -347,15 +362,18 @@ QString UlaService::bne( const QString &first, const QString &second ) const {
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     logUlaManager->addRow( "BNE INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
 
-    for(int index = NR_SIZE_FOR; index >= 0; index--){
-        if(first[index] != second[index]) {
+    for( int index = NR_SIZE_FOR; index >= 0; index-- ){
+
+        logUlaManager->addRow( QString( "%0 != %1").arg( first[index], second[index] ) );
+
+        if( first[index] != second[index] ) {
             result = "1";
             break;
         }
     }
 
-    logUlaManager->addRow( first + (result == "1" ? " != " : " == ") + second );
     logUlaManager->addRow( "RESULT:" + result );
     logUlaManager->addRow( "BNE END\n" );
 
@@ -364,27 +382,44 @@ QString UlaService::bne( const QString &first, const QString &second ) const {
 
 QString UlaService::mul( const QString &first, const QString &second ) const {
 
-    long binary1 = first.toLong();
-    long binary2 = second.toLong();
+    LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+    long nrFirstBinary = first.toLong();
+    long nrSecondBinary = second.toLong();
     long multiply = 0;
     int digit = 0;
     long factor = 1;
 
-    while ( binary2 != 0 ) {
+    logUlaManager->addRow( "MUL INIT" );
+    logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
+    logUlaManager->addRow( QString( "WHILE: %0 != 0" ).arg( second ) );
 
-        digit =  binary2 % NR_SIZE_INT;
+    while ( nrSecondBinary != 0 ) {
+
+        digit = nrSecondBinary % NR_SIZE_INT;
+
+        logUlaManager->addRow( QString( "DIGIT = SECOND(%0) % SIZE_INT(%1)" ).arg( QString::number( nrSecondBinary ), QString::number( NR_SIZE_INT ) ) );
+        logUlaManager->addRow( QString( "FIRST = FIRST(%0) * FACTOR(%1)" ).arg( QString::number( nrFirstBinary ), QString::number( factor ) ) );
+
+        nrFirstBinary = nrFirstBinary * factor;
+
+        logUlaManager->addRow( QString( "DIGIT(%0) == 1 \n" ).arg( QString::number( digit ) ) );
 
         if ( digit == 1 )  {
-            binary1 = binary1 * factor;
-            multiply = sum( QString::number( binary1 ), QString::number( multiply ) ).toLong();
-        } else {
-            binary1 = binary1 * factor;
+            multiply = sum( QString::number( nrFirstBinary ), QString::number( multiply ) ).toLong();
         }
 
-        binary2 = binary2 / NR_SIZE_INT;
+        logUlaManager->addRow( QString( "SECOND = SECOND(%0) / SIZE_INT(%1)" ).arg( QString::number( nrSecondBinary ), QString::number( NR_SIZE_INT ) ) );
+        logUlaManager->addRow( QString( "FACTOR = %0 \n" ).arg( QString::number( NR_SIZE_INT ) ) );
+
+        nrSecondBinary = nrSecondBinary / NR_SIZE_INT;
         factor = NR_SIZE_INT;
 
+
     }
+
+    logUlaManager->addRow( QString("RESULT: %1").arg( QString::number( multiply ) ) );
+    logUlaManager->addRow( "MUL END" );
 
     return QString::number( multiply );
 
@@ -400,22 +435,37 @@ QString UlaService::div( const QString &first, const QString& second ) const {
 
    QString quociente = zeroBinario;
 
+   LogUlaManager* logUlaManager = &LogUlaManager::instance();
+
+   logUlaManager->addRow( "DIV INIT" );
+   logUlaManager->addRow( QString( "VALUES: %0 | %1" ).arg( first, second ) );
+
    for( int index = 0; index <= NR_SIZE_FOR; index++ ){
+
         if( second[index] == "0" ) {
             secondModified[index] = '1';
+            logUlaManager->addRow( QString( "SECONDMODIFIED = 1"));
         } else {
             secondModified[index] = '0';
+            logUlaManager->addRow( QString( "SECONDMODIFIED = 0"));
         }
     }
 
     valor = sum( secondModified, umBinario );
+    logUlaManager->addRow( QString( "VALUE = SECONDMODIFIED(%0) + ONEBINARY(%1)").arg(secondModified, umBinario) );
 
+    logUlaManager->addRow( QString( "WHILE: %0 != %1").arg(resultado, zeroBinario) );
     while( resultado != zeroBinario ) {
         resultado = sum( resultado, valor );
+        logUlaManager->addRow( QString( "RESULT = RESULT(%0) + VALUE(%1)").arg(resultado, valor) );
         resultado.remove( 0, 1 );
+        logUlaManager->addRow( QString( "REMOVE: FIRST TERM OF (%0").arg(resultado));
         quociente = sum( quociente, umBinario );
+        logUlaManager->addRow( QString( "QUOCIENT = QUOCIENT(%0) +  ONEBINARY(%1)").arg(quociente, umBinario) );
     }
 
+    logUlaManager->addRow( QString( "QUOCIENT: %0").arg(quociente) );
+    logUlaManager->addRow( QString( "DIV END"));
     return quociente;
 
 }

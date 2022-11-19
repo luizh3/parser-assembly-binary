@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.2
 
 import br.com.InputCodeController 1.0
 
@@ -49,22 +49,33 @@ Rectangle {
         }
 
         // TODO aumentar tamanho do texto
-        TextArea {
-            id: inputTextArea
+        ScrollView {
             width: parent.width
             height: parent.height - button.height - textDescription.height
-            color: "#fff"
-            font.family: "Arial Black"
-            font.pixelSize: 14
-            wrapMode: "WordWrap"
-            selectByMouse: true
+            padding: 15
 
             background: Rectangle {
                 color: "#323232"
                 radius: 2
             }
 
-            text: control.readText()
+            TextArea {
+                id: inputTextArea
+                width: parent.width
+                height: parent.height
+                color: "#fff"
+                font.family: "Arial Black"
+                font.pixelSize: 14
+                wrapMode: "WordWrap"
+                selectByMouse: true
+
+                background: Rectangle {
+                    color: "#323232"
+                    radius: 2
+                }
+
+                text: control.readText()
+            }
         }
 
         // TODO criar component/colocar icone no botao

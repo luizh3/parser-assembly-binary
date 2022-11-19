@@ -2,19 +2,18 @@
 
 int main () {
 
-    int first = 10;
-    int second = 7;
-
+    int first = 15;
+    int second = 10;
+    
     int result = first + second;
- 
-    if( result  >= 12 ){
-       result = 20 * 2;
+    
+    if( result > 25 ){
+         result = first / 3;
     } else {
-       result = 15;
+         result = second * 10;
     }
 
-    int h = 1 + result;
-
+    int h = result;
 }
 
 

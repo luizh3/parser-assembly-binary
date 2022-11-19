@@ -225,7 +225,6 @@ AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
     }
 
     QString dsAssemblyRow = variableCopy ? QString( "LDR %0, [%1]") : QString( "LDR %0, %1");
-
     QString rawRowAssembly = dsAssemblyRow.arg( variable->getRegister()->nameRegister(), variableCopy ? variableCopy->getRegister()->nameRegister() : dsValue );
 
     const QString value = variableCopy ? QString::number( variableCopy->value() ) : dsValue;
