@@ -1,6 +1,7 @@
 #ifndef LABELMANAGER_H
 #define LABELMANAGER_H
 
+#include <QMap>
 #include <QString>
 
 #include <model/tipooperacaoassemblyenum.h>
