@@ -162,12 +162,16 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
     for(int index = NR_SIZE_FOR; index >= 0; index--) {
         if(first[index] == second[index]) {
 
+            logUlaManager->addRow( QString( "%0 == %1 = %2").arg( first[index], second[index], (!inverter) ? "0" : "1" ) );
+
             result.append((!inverter) ? "0" : "1");
 
             continue;
         }
 
         if(first[index] > second[index]) {
+
+            logUlaManager->addRow( QString( "%0 > %1 = %2").arg( first[index], second[index], (!inverter) ? "1" : "0" ) );
 
             result.append((!inverter) ? "1" : "0");
 
@@ -179,8 +183,11 @@ QString UlaService::sub( const QString &first, const QString &second ) const {
         if(!inverter) {
             inverter = true;
             result.append("1");
+            logUlaManager->addRow( QString( "%0 < %1 = %2").arg( first[index], second[index], "1" ) );
+
         } else {
             result.append("0");
+            logUlaManager->addRow( QString( "%0 < %1 = %2").arg( first[index], second[index], "0" ) );
         }
     }
 
