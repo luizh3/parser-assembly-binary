@@ -195,7 +195,10 @@ QList<AssemblyRowModel *> AssemblyService::toAritmeticAssemblyRow(const QString&
 
     RegisterManager* registerManager = &RegisterManager::instance();
 
-    variable->setRegister( registerManager->getOne() );
+    if( !variable->getRegister() ){
+        variable->setRegister( registerManager->getOne() );
+    }
+
     QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
     QList<AssemblyRowModel*> assemblyRows = numbersToAsmInstruction( params );
     QString rawRowAssembly = QString( dsRow ).arg( variable->getRegister()->nameRegister(), params.first(), params.last() );
@@ -216,7 +219,7 @@ AssemblyRowModel* AssemblyService::load( VariableModel* variable ) const {
 
     variable->setRegister( registerManager->getOne() );
 
-    QString dsValue = variable->paramsWithoutOperators().join("");
+    QString dsValue = variable->paramsWithoutOperators().isEmpty() ? "0" : variable->paramsWithoutOperators().join("");
 
     VariableModel* variableCopy = nullptr;
 
@@ -239,7 +242,10 @@ AssemblyRowModel *AssemblyService::sub( VariableModel* variable ) const {
     // TODO ajustar o sub para ser igual ao add
     RegisterManager* registerManager = &RegisterManager::instance();
 
-    variable->setRegister( registerManager->getOne() );
+    if( !variable->getRegister() ){
+        variable->setRegister( registerManager->getOne() );
+    }
+
     const QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
     QString rawRowAssembly = QString( "SUB %0, [%1], [%2]").arg( variable->getRegister()->nameRegister(), params.first(), params.last() );
 
@@ -253,7 +259,10 @@ QList<AssemblyRowModel*> AssemblyService::add( VariableModel *variable ) const {
 
     RegisterManager* registerManager = &RegisterManager::instance();
 
-    variable->setRegister( registerManager->getOne() );
+    if( !variable->getRegister() ){
+        variable->setRegister( registerManager->getOne() );
+    }
+
     QList<QString> params = toAsmInstruction( variable->paramsWithoutOperators() );
     QList<AssemblyRowModel*> assemblyRows = numbersToAsmInstruction( params );
     QString rawRowAssembly = QString( "ADD %0, [%1], [%2]").arg( variable->getRegister()->nameRegister(), params.first(), params.last() );
