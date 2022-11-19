@@ -382,6 +382,10 @@ QString UlaService::bne( const QString &first, const QString &second ) const {
 
 QString UlaService::mul( const QString &first, const QString &second ) const {
 
+    if( first.toInt() <= 0 || second.toInt() <= 0 ) {
+        return "0";
+    }
+
     LogUlaManager* logUlaManager = &LogUlaManager::instance();
 
     long nrFirstBinary = first.toLong();
@@ -426,6 +430,10 @@ QString UlaService::mul( const QString &first, const QString &second ) const {
 }
 
 QString UlaService::div( const QString &first, const QString& second ) const {
+
+    if( first.toInt() <= 0 || second.toInt() <= 0 ) {
+        return "0";
+    }
 
    QString secondModified;
    QString umBinario = "0000000001";
